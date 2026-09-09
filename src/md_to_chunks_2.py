@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 OUTPUT_ROOT = Path(__file__).parent.parent / 'outputs'
@@ -25,6 +26,7 @@ def text_to_chunks(text:str,chunk_size:int=100,overlap:int=20):
         chunks_list.append(chunk)
 
     return chunks_list
+
 
 '''overlap的作用:降低切分边界导致语义断裂的问题
 假设原文是：
@@ -96,9 +98,5 @@ def chunks_with_source(texts_list,chunk_size:int=100,
             ensure_ascii=False,
             indent=2
         )
-        
     return chunks_info
 
-
-
-        

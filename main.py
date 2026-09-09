@@ -1,9 +1,10 @@
 from pathlib import Path
 from src.document_loader_1 import pdf_to_list
-from src.chunker_2 import chunks_with_source
+from src.md_to_chunks_2 import chunks_with_source
 from src.embedding_3 import chunks_embedding,multi_query_embedding
 from src.embedded_store_4 import build_index
-from src.retriever_5 import search
+from src.vector_retriever_5 import search
+from src.bm25_retriever import BM25Retriever
 
 texts_list = pdf_to_list("data/real")
 '''
@@ -36,6 +37,9 @@ chunks_info = chunks_with_source(texts_list,chunk_size=100,overlap=20)
 ]
 '''
 
+
+'''Embedding + FAISS：Dense Retrieval / Vector Retrieval
+中文一般叫：稠密检索 / 向量检索 / 语义检索'''
 chunks_embedded = chunks_embedding(chunks_info)
 storehouse = build_index(chunks_embedded)
 
@@ -68,3 +72,13 @@ for id,query in enumerate(queries_embedded): #(embedding_dim)一维numpy数组
         print(f"source: {result['source']}")
         print(f"chunk_id: {result['id']}")
         print(f"text: {result['text']}")
+
+
+'''BM25：Sparse Retrieval / Lexical Retrieval
+中文一般叫：稀疏检索 / 词法检索 / 关键词检索'''
+print('\n')
+print("This is BM25 Retrieval part")
+bm25retriever = BM25Retriever()
+bm25retriever.fit(chunks_info)
+results = bm25retriever.search(queries[0])
+print(results)
