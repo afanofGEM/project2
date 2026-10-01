@@ -1,0 +1,25 @@
+{
+  "decision_id": "planner_fusion_v1_locked_decision",
+  "baseline_config": "config/baseline_v1.json",
+  "candidate_strategy": "distribution_based_original_anchor",
+  "status": "no_go",
+  "decision_metric": "Complete@5",
+  "locked_result": {
+    "path": "outputs/evaluation/planner_oracle_locked_distribution_based_original_anchor_results.json",
+    "sha256": "04F8391B9349C7E0EB87010060695E9DCDDD8468CD0C935D1E830DBBCDA57D36",
+    "successful_cases": 10,
+    "failed_cases": 0,
+    "original_complete_at_5": 0.8,
+    "llm_planner_complete_at_5": 0.8,
+    "oracle_complete_at_5": 0.8,
+    "llm_planner_mrr_at_5": 0.8833333333333334,
+    "oracle_mrr_at_5": 0.8833333333333334
+  },
+  "reason": "LLM Planner and Oracle produced no Complete@5 gain over Original on the locked test.",
+  "fusion_loss_case_ids_at_5": [
+    "planner_test_006",
+    "planner_test_009"
+  ],
+  "production_default_remains": "round_robin",
+  "next_gate": "Do not add Function Calling or expand the Planner chain until a new independently motivated experiment is defined with a new development and locked-test protocol."
+}

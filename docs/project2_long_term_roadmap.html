@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project 2 长期完善路线</title>
+<style>
+@page { size: A4; margin: 16mm 15mm 18mm; }
+* { box-sizing: border-box; }
+html { color: #18202a; background: #fff; }
+body {
+  max-width: 180mm;
+  margin: 0 auto;
+  font-family: "Microsoft YaHei", "SimSun", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.68;
+}
+.document-title {
+  margin: 46mm 0 12mm;
+  padding: 14mm 10mm;
+  border-top: 4px solid #2457a7;
+  border-bottom: 1px solid #b9c8de;
+  color: #17365d;
+  font-size: 27pt;
+  text-align: center;
+  letter-spacing: 1px;
+}
+h1, h2, h3, h4 { color: #17365d; line-height: 1.32; page-break-after: avoid; }
+h2 {
+  margin-top: 10mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 1px solid #9fb6d5;
+  font-size: 18pt;
+  break-before: page;
+}
+h2:first-of-type { break-before: auto; }
+h3 { margin: 7mm 0 3mm; font-size: 14pt; }
+h4 { margin: 5mm 0 2mm; font-size: 11.5pt; }
+p { margin: 2.2mm 0; }
+blockquote {
+  margin: 4mm 0;
+  padding: 3mm 4mm;
+  border-left: 4px solid #4c78b8;
+  background: #f3f7fc;
+  color: #33475b;
+}
+ul, ol { margin: 2mm 0 3mm 7mm; padding-left: 5mm; }
+li { margin: 1.1mm 0; }
+code {
+  font-family: Consolas, "Microsoft YaHei", monospace;
+  padding: .2mm 1mm;
+  border-radius: 2px;
+  background: #edf2f7;
+  color: #7a2333;
+}
+pre {
+  margin: 4mm 0;
+  padding: 4mm;
+  border: 1px solid #c8d4e3;
+  border-radius: 4px;
+  background: #f6f8fa;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  page-break-inside: avoid;
+}
+pre code { padding: 0; background: transparent; color: #1e2936; }
+table {
+  width: 100%;
+  margin: 4mm 0 6mm;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 9.2pt;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+th, td {
+  padding: 2.2mm 2.5mm;
+  border: 1px solid #bdc9d8;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+th { color: #17365d; background: #e8f0fa; text-align: left; }
+tr:nth-child(even) td { background: #f8fafc; }
+a { color: #2457a7; text-decoration: none; overflow-wrap: anywhere; }
+hr { margin: 7mm 0; border: 0; border-top: 1px solid #c8d4e3; }
+strong { color: #142f50; }
+.footer-note {
+  margin-top: 12mm;
+  padding-top: 3mm;
+  border-top: 1px solid #c8d4e3;
+  color: #64748b;
+  font-size: 8.5pt;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<h1 class="document-title">Project 2 长期完善路线</h1>
+<blockquote>项目定位：面向银行协议问答的、可复现、可评测、可解释、可部署的 RAG / Controlled Agentic RAG 系统  </blockquote>
+<blockquote>文档版本：v1.1  </blockquote>
+<blockquote>更新日期：2026-10-01</blockquote>
+<h2>1. 核心结论</h2>
+<p>这个项目值得长期改，但不能以“扩大评测集、故意降低 Baseline”为目标。</p>
+<p>正确做法是：</p>
+<ol>
+<li>冻结当前自然评测集，所有新旧版本都在相同数据上比较。</li>
+<li>单独建立复杂问题开发集和锁定测试集，用于验证 Query Planner。</li>
+<li>先证明问题存在，再引入对应技术。</li>
+<li>每个阶段设置进入条件、验收门槛和止损条件。</li>
+<li>LangGraph、MCP、LoRA、vLLM 等技术只在解决真实问题时接入。</li>
+</ol>
+<p>最终简历重点不是“使用了多少热门框架”，而是能够说明：</p>
+<ul>
+<li>为什么使用 BM25 + Dense Hybrid。</li>
+<li>为什么需要 Reranker。</li>
+<li>为什么 Hit@K 不足以评价多证据问题。</li>
+<li>Query Planner 为什么可能负优化。</li>
+<li>如何定位 Planner、Retriever、Reranker、Merge、Generator 的失败。</li>
+<li>如何防止评测泄漏和测试集过拟合。</li>
+<li>某项技术为什么进入项目，以及它的收益、代价和止损条件。</li>
+</ul>
+<h2>2. 当前项目事实基线</h2>
+<p>当前已验证结果：</p>
+<table>
+<thead>
+<tr><th>模块</th><th>当前结果</th><th>工程判断</th></tr>
+</thead><tbody>
+<tr><td>Hybrid Retriever</td><td>Hit@5 94%，Complete@5 92%，Complete@20 100%</td><td>混合检索主链路成立，应保留</td></tr>
+<tr><td>Cross Encoder Reranker</td><td>Hit@5 100%，Complete@5 96%，MRR@5 0.824</td><td>能拉回后排证据，但可能破坏多证据完整性</td></tr>
+<tr><td>多证据样本</td><td>7 条</td><td>数量不足以稳定判断 Planner 价值</td></tr>
+<tr><td>Low Planner Pipeline</td><td>Top5 Complete 与 Minimal 相同，MRR 更低</td><td>当前没有证明 Planner 收益</td></tr>
+<tr><td>平均总延迟</td><td>Minimal 1.518 秒，Low 9.347 秒</td><td>Planner 当前带来约 6 倍总延迟</td></tr>
+</tbody></table>
+<p>因此，当前最重要的问题不是继续增加 Agent 功能，而是回答：</p>
+<blockquote>Planner 没有效果，是因为评测集缺少复杂问题、Query 拆分质量不足，还是最终 Fusion/Merge 把已召回证据排坏了？</blockquote>
+<h2>3. 目标架构</h2>
+<pre><code>
+数据面
+PDF → 解析与清洗 → 版本化 Chunk → Embedding/BM25/FAISS 索引
+                         ↓
+评测面
+冻结测试集 → Component Eval → End-to-End Eval → Regression Report
+                         ↓
+查询面
+Query
+  → 输入校验
+  → Minimal / Planned / Refuse 路由
+  → Query Plan
+  → 每个 Query 独立 Hybrid Retrieval
+  → 每个 Query 独立 Rerank
+  → Fusion / Coverage Selection
+  → Evidence Sufficiency
+  → 最多一次补检索
+  → Context Budget
+  → Generation
+  → Citation Verification
+  → Output Guard
+
+横切能力
+配置、Schema、版本号、Trace、延迟、测试、API、安全
+</code></pre>
+<p>这套路线参考但不照搬以下真实工程：</p>
+<ul>
+<li>Haystack：组件化 Pipeline、分支、循环和 Rank Fusion。</li>
+<li>RAGFlow：可查看的切块、检索测试、引用和空答案。</li>
+<li>Pyserini：可复现的稀疏、稠密、混合检索和标准评价。</li>
+<li>Azure Agentic Retrieval：Minimal、Planning、多查询检索、合并和活动日志。</li>
+<li>LangSmith / Phoenix：离线回归、实验追踪和可观测性。</li>
+</ul>
+<h2>4. 阶段路线</h2>
+<h3>阶段 0：冻结 Baseline，补齐工程基础</h3>
+<h4>是否必要</h4>
+<p>必要，且应最先完成。否则后续指标变化无法区分是算法、数据还是环境变化造成的。</p>
+<h4>工作内容</h4>
+<ul>
+<li>冻结当前 61 条评测数据为 <code>bank_eval_natural_v1</code>。</li>
+<li>保存 corpus、chunker、embedding、reranker、planner、prompt 和配置版本。</li>
+<li>增加明确的依赖文件与启动说明。</li>
+<li>将模型名、TopK、阈值等移入统一配置。</li>
+<li>为 QueryPlan、Chunk、RetrievalResult、PipelineResult 建立 Pydantic Schema。</li>
+<li>建立 unit、integration、regression 三层测试。</li>
+<li>保留现有业务类，避免一次性大重构。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>新环境可根据文档运行完整评测。</li>
+<li>当前 Baseline 可以重复得到。</li>
+<li>修改 Planner 不影响 Minimal 模式。</li>
+<li>每份报告包含数据、模型、Prompt、索引和配置版本。</li>
+</ul>
+<h4>止损条件</h4>
+<ul>
+<li>不为“代码看起来更规范”进行大范围移动文件。</li>
+<li>不在此阶段修改检索算法。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>如何保证实验可复现？</li>
+<li>配置和模型版本如何管理？</li>
+<li>单元测试、集成测试、回归测试分别测什么？</li>
+</ul>
+<hr>
+<h3>阶段 1：建立版本化评测体系</h3>
+<h4>是否必要</h4>
+<p>必要。这是整个长期路线优先级最高的能力。</p>
+<h4>数据集设计</h4>
+<ol>
+<li><code>natural_v1</code>：当前自然问题，永久冻结，用于检查旧能力退化。</li>
+<li><code>planner_dev</code>：真实需要跨段、跨协议、条件组合的问题，可用于分析和调参。</li>
+<li><code>planner_test_locked</code>：不参与调参，只用于阶段验收。</li>
+<li><code>security_regression</code>：Prompt Injection、越权、超长输入和格式异常。</li>
+</ol>
+<h4>每条样本至少记录</h4>
+<ul>
+<li>Query、task_type、evidence_mode。</li>
+<li>corpus_version。</li>
+<li>必需证据集合和 Expected Points。</li>
+<li>样本来源和构造理由。</li>
+<li>可选的人工 Gold Subqueries。</li>
+</ul>
+<h4>评价维度</h4>
+<ul>
+<li>Retriever：Hit、Recall、Complete、MRR，必要时增加 NDCG/MAP。</li>
+<li>Reranker：拉回数、破坏数、证据完整性。</li>
+<li>Planner：Schema 合法率、子查询覆盖、Oracle 差距。</li>
+<li>End-to-End：答案要点、引用、拒答、端到端延迟。</li>
+<li>系统成本：Query 数、候选数、Reranker Pair 数、各阶段 P50/P95。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>所有版本在相同冻结数据上比较。</li>
+<li>同时报告百分比和样本绝对数量。</li>
+<li>Component Eval 与 End-to-End Eval 分离。</li>
+<li>LLM Judge 只作辅助，不替代人工证据和 Expected Points。</li>
+</ul>
+<h4>止损条件</h4>
+<ul>
+<li>不通过修改旧问题来配合新算法。</li>
+<li>不把新难题上的低分宣传成旧 Baseline 被改进。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>为什么要区分 Dev 与 Locked Test？</li>
+<li>为什么 Hit@K 不足以评价多证据问题？</li>
+<li>如何避免评测数据泄漏？</li>
+</ul>
+<hr>
+<h3>阶段 2：版本化数据处理与索引</h3>
+<h4>工作内容</h4>
+<ul>
+<li>使用稳定标识：<code>document_id + document_version + chunk_ordinal + content_hash</code>。</li>
+<li>为每次构建生成 corpus/index manifest。</li>
+<li>持久化 Embedding、FAISS 和 BM25 索引。</li>
+<li>Chunk 能追溯至 PDF、页码或原段落。</li>
+<li>生成切块审计报告。</li>
+<li>对自然段、重叠、标题感知切分做相同数据上的对照。</li>
+<li>重新切块时根据真实文本迁移标签，禁止沿用旧数字 ID。</li>
+</ul>
+<h4>暂时不做</h4>
+<ul>
+<li>不迁移向量数据库。当前数据量很小，尚无动态更新、多租户、并发写入和复杂过滤需求。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>相同 corpus 版本得到相同 Chunk 和索引。</li>
+<li>应用启动不再重新计算全部 Embedding。</li>
+<li>每个引用可以返回原文来源。</li>
+<li>语料变化会触发显式版本变化，而不是静默污染标签。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>为什么 Chunk ID 不能只用递增数字？</li>
+<li>索引如何版本化与重建？</li>
+<li>什么时候需要向量数据库？</li>
+</ul>
+<hr>
+<h3>阶段 3：固化 Retriever 与 Reranker</h3>
+<h4>工作内容</h4>
+<ul>
+<li>保留 Dense、BM25、Hybrid 三组对照。</li>
+<li>TopK、RRF 权重、candidate_k 只在 Dev 集调整。</li>
+<li>批量计算 Query Embedding。</li>
+<li>验证 Query/Chunk 截断策略。</li>
+<li>统计 P50/P95、候选数和 Reranker Pair 数。</li>
+<li>取消固定 <code>reranker_score &gt;= 0.9</code> 的通用业务含义，改为 TopK 或经 Dev 校准的策略。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>Hybrid 稳定优于或至少不弱于单路检索。</li>
+<li>Reranker 拉回和破坏的案例都可解释。</li>
+<li>每个参数变更都附同数据集对照报告。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>BM25 与 Dense 各自解决什么问题？</li>
+<li>RRF 为什么适合融合不同分数量纲？</li>
+<li>为什么 Cross Encoder 可能损害证据集合完整性？</li>
+</ul>
+<hr>
+<h3>阶段 4：Oracle 驱动的 Query Planner 与 Fusion 验证</h3>
+<h4>是否必要</h4>
+<p>这是当前最关键的算法阶段，应先于 LangGraph、MCP 和 LoRA。</p>
+<h4>四组严格对照</h4>
+<pre><code>
+A. Original Query
+B. 简单规则拆分
+C. LLM Planner
+D. 人工 Oracle Subqueries
+</code></pre>
+<p>四组使用相同 Retriever、Reranker、candidate_k 和最终 K。</p>
+<h4>必须记录的链路</h4>
+<pre><code>
+子查询生成
+→ 每个子查询 Hybrid Top20
+→ 每个子查询 Reranker 结果
+→ Fusion 前结果
+→ Fusion 后结果
+</code></pre>
+<h4>Fusion 对照</h4>
+<ul>
+<li>当前 round-robin。</li>
+<li>RRF。</li>
+<li>Weighted RRF。</li>
+<li>Coverage-aware quota/selector。</li>
+<li>必要时 distribution-based fusion。</li>
+</ul>
+<h4>决策树</h4>
+<pre><code>
+Oracle 也不优于 Original
+    → 停止优化 Planner，检查语料、检索和任务本身
+
+Oracle 有效，但 LLM Planner 无效
+    → 改 Planner 数据或 Prompt，未来才考虑 LoRA
+
+子查询已经找到证据，但 Fusion 后丢失
+    → 优化 Fusion/Coverage，不继续调 Planner Prompt
+
+复杂问题提升，但简单问题退化
+    → Selective Router，只对复杂问题启用 Planner
+</code></pre>
+<h4>验收门槛</h4>
+<ul>
+<li>Oracle 对复杂问题存在净拉回。</li>
+<li>Planner 与 Oracle 的差距可以定位。</li>
+<li>新增收益超过回退案例。</li>
+<li>Planner 收益值得其额外延迟和调用成本。</li>
+</ul>
+<h4>止损条件</h4>
+<ul>
+<li>Oracle 无收益时终止 Planner 主线。</li>
+<li>不设置“Planner 必须胜出”的结论。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>如何证明 Query Decomposition 值得做？</li>
+<li>为什么要先跑 Oracle？</li>
+<li>Rank Fusion 和 Evidence Selection 有什么区别？</li>
+</ul>
+<hr>
+<h3>阶段 5：受控 Agentic RAG</h3>
+<h4>进入条件</h4>
+<p>阶段 4 已证明 Planner 或多查询检索对复杂问题有价值。</p>
+<h4>目标 Workflow</h4>
+<pre><code>
+Minimal：Original Query 检索
+Low：Planner → 多 Query 检索 → Fusion
+Medium：Low → Evidence Sufficiency → 最多一次补检索
+Refuse：证据不足或超出语料范围
+</code></pre>
+<h4>工作内容</h4>
+<ul>
+<li>QueryPlan 使用 Pydantic Structured Output。</li>
+<li>设置最大子查询数、最大候选数、最大 Reranker Pair 数。</li>
+<li>最多补检索一次。</li>
+<li>记录每一步活动和失败原因。</li>
+<li>银行领域不设置“模型凭内部知识直接回答”的路由。</li>
+<li>使用 Context Budget 控制重复证据和 Token 数量。</li>
+</ul>
+<h4>不做</h4>
+<ul>
+<li>不实现无限 ReAct Loop。</li>
+<li>不让 Agent 自由创建工具或改变系统配置。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>Minimal、Low、Medium 能在同一评测中对比。</li>
+<li>每次 Retry 都能解释触发原因。</li>
+<li>超出预算时能降级或拒答。</li>
+</ul>
+<h4>对应学习计划</h4>
+<ul>
+<li>Structured Output / Function Calling。</li>
+<li>Context Engineering。</li>
+<li>Agentic RAG / Planning / Routing。</li>
+<li>Agent Evaluation / Reliability。</li>
+<li>ReAct 只学习思想，不作为无边界生产架构。</li>
+</ul>
+<h4>手写 Tool Calling 基础闭环</h4>
+<p>这部分应当加入项目，但它首先是一个框架无关的应用编排能力，不能为了展示 Function Calling，把原本固定的单次检索强行改成 LLM 选工具。</p>
+<p>第一版按照下面的闭环实现：</p>
+<pre><code>
+1. 写 Python Function
+2. 定义 Tool Schema
+3. 把 Tools 传给 LLM
+4. 第一次调用 LLM
+5. 读取零个、一个或多个 Tool Call
+6. Tool Registry 校验名称和参数，然后执行函数
+7. 使用 tool_call_id / call_id 将 Tool Result 回填对话
+8. 第二次调用 LLM，得到最终答案或下一轮 Tool Call
+</code></pre>
+<p>真实工程中，第 8 步不能假设必然返回最终文本：模型可能不调用工具，也可能一次调用多个工具，或继续请求下一轮工具。因此第一版应设置 <code>max_tool_rounds=1</code>，超过预算就停止、降级或报错；后续只有评测证明需要时才增加轮数。</p>
+<p>项目中的最小 Tool 集合建议为：</p>
+<pre><code>
+search_bank_documents(query, top_k, filters=None)
+get_document_metadata(document_id)
+</code></pre>
+<p><code>search_bank_documents</code> 只暴露已经稳定的 Retrieval Pipeline，不把 Vector、BM25、Reranker 分别交给 LLM 自由编排。<code>get_document_metadata</code> 用于查询来源、版本和协议信息。只有存在两个以上职责不同、确实需要模型选择的工具时，Tool Calling 才比固定 Python 调用链更有意义。</p>
+<p>Tool Registry 至少负责：</p>
+<ul>
+<li>维护工具名称到 Python callable 的显式白名单映射。</li>
+<li>使用 Pydantic/JSON Schema 校验输入，不直接相信模型生成的 arguments。</li>
+<li>禁止使用 <code>eval</code>、<code>globals()[name]</code> 或模型指定的动态 import。</li>
+<li>为每次调用保存 <code>tool_call_id</code>、tool_name、arguments、latency、status。</li>
+<li>处理未知工具、非法参数、函数异常、超时和过大输出。</li>
+<li>对 Tool Result 做输出 Schema 校验和长度限制，并将其视为不可信数据。</li>
+<li>第一版顺序执行多个 Tool Call；只有存在真实延迟问题时再评估并行执行。</li>
+</ul>
+<p>官方 Function Calling 流程同样是“发送工具 → 接收调用 → 应用侧执行 → 回填带 call_id 的结果 → 再次调用模型”。工具参数由 JSON Schema 描述，应用侧仍负责真正执行函数。MCP 后续只是把相同能力通过标准协议暴露出去，不替代这个应用侧闭环。</p>
+<p>Tool Calling 测试至少覆盖：</p>
+<ul>
+<li>模型不调用任何工具。</li>
+<li>正确调用一个工具。</li>
+<li>一次返回多个 Tool Call。</li>
+<li>工具名不存在。</li>
+<li>arguments 不是合法 JSON 或不满足 Schema。</li>
+<li>工具超时、抛异常或返回超大内容。</li>
+<li>Tool Result 与正确的 <code>tool_call_id</code> 对应。</li>
+<li>达到最大轮数后能够终止，不发生无限循环。</li>
+</ul>
+<p>验收门槛：</p>
+<ul>
+<li>先使用 Fake LLM/Fake Tool 跑通闭环，再接真实模型。</li>
+<li>Tool Registry 与具体 LLM SDK 解耦。</li>
+<li>同一 Tool 可被普通 Python Workflow、Tool Calling Loop 和未来 MCP Adapter 复用。</li>
+<li>Trace 能完整重放第一次模型输出、函数执行、结果回填和最终模型输出。</li>
+<li>与固定 Pipeline 对比；没有路由收益时，不替换当前默认检索链路。</li>
+</ul>
+<p>面试问题：</p>
+<ul>
+<li>Tool Calling 为什么不是“LLM 直接执行 Python”？</li>
+<li>Tool Schema、Tool Registry 和 Python Function 分别负责什么？</li>
+<li>为什么必须保留 <code>tool_call_id</code>？</li>
+<li>如何防止模型调用未注册函数或传入危险参数？</li>
+<li>Function Calling 与 MCP 的关系和区别是什么？</li>
+</ul>
+<hr>
+<h3>阶段 6：Generation、引用验证与安全</h3>
+<h4>工作内容</h4>
+<ul>
+<li>Expected Points 覆盖评价。</li>
+<li>Citation Precision / Recall。</li>
+<li>验证引用是否支持对应陈述。</li>
+<li>可回答和不可回答问题的拒答评价。</li>
+<li>区分证据正确但生成错误的案例。</li>
+<li>测试上下文截断、重复证据和冲突证据。</li>
+<li>建立人工抽检报告。</li>
+</ul>
+<h4>安全回归</h4>
+<ul>
+<li>PDF 中的间接 Prompt Injection。</li>
+<li>用户直接注入。</li>
+<li>超长 Query。</li>
+<li>恶意 JSON/Unicode。</li>
+<li>要求执行外部操作的越权问题。</li>
+<li>无证据但要求强制回答。</li>
+</ul>
+<h4>验收门槛</h4>
+<ul>
+<li>每个最终答案可追溯证据。</li>
+<li>无充分证据时稳定拒答。</li>
+<li>文档中的指令不能改变系统行为。</li>
+<li>可区分 Retrieval、Coverage 与 Generation Failure。</li>
+</ul>
+<h4>面试问题</h4>
+<ul>
+<li>如何评价 Grounded Answer？</li>
+<li>Citation Correctness 与 Retrieval Recall 有什么区别？</li>
+<li>RAG 为什么不能自动解决 Prompt Injection？</li>
+</ul>
+<hr>
+<h3>阶段 7：API、LangGraph 与 MCP</h3>
+<h4>7.1 FastAPI</h4>
+<p>核心 Pipeline 稳定后增加：</p>
+<ul>
+<li><code>/query</code></li>
+<li><code>/health</code></li>
+<li><code>/versions</code></li>
+<li><code>/documents/{id}</code></li>
+<li>统一错误码、超时和请求 ID</li>
+<li>CLI、API、测试共用一个核心服务</li>
+</ul>
+<h4>7.2 LangGraph 的进入条件</h4>
+<p>只有出现以下需求才迁移：</p>
+<ul>
+<li>多路状态分支。</li>
+<li>重试和中断恢复。</li>
+<li>Human-in-the-loop。</li>
+<li>Checkpoint。</li>
+<li>长任务恢复。</li>
+</ul>
+<p>迁移时仅包装现有 Planner、Retriever、Reranker、Generator，不重写业务组件。必须验证纯 Python Workflow 与 LangGraph 行为一致。</p>
+<h4>7.3 MCP 的进入条件</h4>
+<p>核心 API 稳定，并且确实需要被外部 Agent/客户端调用。可暴露：</p>
+<pre><code>
+tool: search_bank_documents
+resource: bank_document_metadata
+prompt: answer_with_bank_evidence
+</code></pre>
+<p>MCP Adapter 应复用阶段 5 已验证的 Tool Schema、Tool Registry 和 Python Function。Function Calling 解决的是应用内部“模型请求工具、应用执行并回填结果”的循环；MCP 解决的是工具发现与调用的标准化协议。不要为接入 MCP 再复制一套检索逻辑。</p>
+<h4>暂时不做</h4>
+<ul>
+<li>A2A。</li>
+<li>Multi-Agent。</li>
+</ul>
+<p>当前没有多个独立权限域、外部系统和角色协作需求，多 Agent 只会增加调试成本。</p>
+<h4>验收门槛</h4>
+<ul>
+<li>CLI、API、MCP 调用相同核心 Pipeline。</li>
+<li>API/MCP Schema 有契约测试。</li>
+<li>超时、错误和版本信息可观察。</li>
+<li>LangGraph 必须带来明确的恢复、状态或人工介入价值。</li>
+</ul>
+<hr>
+<h3>阶段 8：可观测性与推理性能</h3>
+<h4>可观测性</h4>
+<ul>
+<li>trace_id。</li>
+<li>Planner、Retriever、Reranker、Merge、Generator Span。</li>
+<li>Query 数、候选数、Reranker Pair 数。</li>
+<li>Prompt、模型、索引、数据集版本。</li>
+<li>P50/P95。</li>
+<li>Failure Type。</li>
+<li>用户反馈和 Bad Case 回流。</li>
+</ul>
+<p>先使用结构化 JSON Trace；只有需要图形化实验管理时再接 OpenTelemetry/Phoenix。</p>
+<h4>推理性能</h4>
+<ul>
+<li>学习 KV Cache、RoPE、GQA，并做小型 benchmark。</li>
+<li>为 Generator 建立统一 backend 接口。</li>
+<li>保留 Hugging Face backend。</li>
+<li>出现并发服务需求后再增加 vLLM backend。</li>
+<li>测量 TTFT、TPOT、QPS、GPU 显存和并发。</li>
+</ul>
+<h4>止损条件</h4>
+<ul>
+<li>单用户场景不为“用了 vLLM”迁移 Linux/WSL。</li>
+<li>没有负载测试数据时不宣称吞吐提升。</li>
+</ul>
+<hr>
+<h3>阶段 9：LoRA/QLoRA 与后训练</h3>
+<h4>进入条件</h4>
+<ul>
+<li>Prompt 和 Fusion 已充分验证。</li>
+<li>Oracle 有收益，证明 Query Decomposition 有价值。</li>
+<li>LLM Planner 与 Oracle 仍有稳定差距。</li>
+<li>已积累 Query → Gold Subqueries 数据。</li>
+<li>有独立 Locked Test。</li>
+</ul>
+<h4>对照实验</h4>
+<pre><code>
+Base + Prompt
+Base + Few-shot
+LoRA
+QLoRA
+</code></pre>
+<h4>报告内容</h4>
+<ul>
+<li>复杂问题质量。</li>
+<li>简单问题退化。</li>
+<li>格式合法率。</li>
+<li>延迟。</li>
+<li>可训练参数。</li>
+<li>显存。</li>
+<li>Locked Test 泛化效果。</li>
+</ul>
+<h4>不进入当前主线</h4>
+<ul>
+<li>DPO、PPO、GRPO。</li>
+</ul>
+<p>除非已经有偏好数据、奖励信号和稳定的生成行为问题，否则把这些内容作为独立学习实验。</p>
+<h2>5. 学习计划映射</h2>
+<table>
+<thead>
+<tr><th>学习内容</th><th>是否进入项目主线</th><th>合适阶段</th><th>原因</th></tr>
+</thead><tbody>
+<tr><td>Structured Output / Function Calling</td><td>是</td><td>0、5、7</td><td>建立可靠组件协议并手写 Tool Calling 闭环</td></tr>
+<tr><td>Agentic RAG / Routing</td><td>是</td><td>4、5</td><td>与 Planner 和补检索直接对应</td></tr>
+<tr><td>Agent Evaluation / Reliability</td><td>是</td><td>1、6</td><td>当前项目最缺的能力之一</td></tr>
+<tr><td>Context Engineering</td><td>是</td><td>5、6</td><td>处理证据预算、重复、覆盖和引用</td></tr>
+<tr><td>ReAct</td><td>学习，不直接落地主线</td><td>5 前</td><td>理解 Agent Loop，但当前应采用受控工作流</td></tr>
+<tr><td>LangGraph</td><td>有条件</td><td>7</td><td>状态、重试和恢复复杂后才有价值</td></tr>
+<tr><td>MCP</td><td>有条件</td><td>7</td><td>作为稳定能力的对外适配层</td></tr>
+<tr><td>Middleware / Tool Governance</td><td>有条件</td><td>7</td><td>有真实工具后再做权限、超时和审计</td></tr>
+<tr><td>KV Cache / RoPE / GQA</td><td>学习与实验</td><td>8</td><td>理解模型推理，不解决检索质量</td></tr>
+<tr><td>vLLM / PagedAttention</td><td>有条件</td><td>8</td><td>出现并发吞吐需求后进入</td></tr>
+<tr><td>LoRA / QLoRA</td><td>有条件</td><td>9</td><td>必须先证明模型能力是瓶颈</td></tr>
+<tr><td>Memory</td><td>暂不做长期记忆</td><td>未来</td><td>单轮协议检索目前不需要用户长期状态</td></tr>
+<tr><td>Multi-Agent / A2A</td><td>不进入当前主线</td><td>未来</td><td>缺少真实多角色、多系统需求</td></tr>
+<tr><td>DPO/PPO/GRPO</td><td>独立学习</td><td>未来</td><td>当前没有偏好数据和奖励模型问题</td></tr>
+</tbody></table>
+<h2>6. 全局止损规则</h2>
+<ol>
+<li>新评测集不能用于证明旧 Baseline 变差；所有版本必须运行相同冻结集合。</li>
+<li>Oracle 无收益就停止 Planner，不无限调 Prompt。</li>
+<li>LangGraph 没有带来恢复、状态或可观测性收益就不迁移。</li>
+<li>MCP 没有真实客户端就不提前接入。</li>
+<li>vLLM 没有并发负载就不替换当前 backend。</li>
+<li>LoRA 没有 Locked Test 泛化收益就不保留。</li>
+<li>每个新模块必须说明：解决什么失败、相对什么 Baseline、代价是多少。</li>
+<li>每阶段只改变一个主要变量，避免无法归因。</li>
+<li>Tool Calling 没有两个以上有意义的工具或真实路由需求时，不替换固定 Pipeline。</li>
+<li>Tool Registry 只能执行白名单函数，所有参数和结果必须经过 Schema 校验。</li>
+</ol>
+<h2>7. 每阶段新对话模板</h2>
+<p>后续每开启一个阶段的新对话，复制下面的模板：</p>
+<pre><code>
+当前要推进 Project 2 路线的【阶段 X：阶段名称】。
+
+请先：
+1. 阅读 docs/project2_long_term_roadmap.pdf 中该阶段的进入条件、验收门槛和止损条件；
+2. 检查当前仓库状态和上一阶段产物；
+3. 对照真实工程项目或官方文档，说明为什么这样设计；
+4. 先给出本阶段最小工作拆分，不要一次完成所有功能；
+5. 每次修改后运行与风险相称的测试；
+6. 明确哪些结果已经验证，哪些只是推断；
+7. 如果实验不如 Baseline，先分析失败层级，不要为了完成阶段强行保留功能。
+
+本阶段目标：
+（填写）
+
+本阶段不做：
+（填写）
+
+当前已知结果或报错：
+（填写）
+</code></pre>
+<h2>8. 推荐推进顺序</h2>
+<pre><code>
+现在
+  → 阶段 0：Baseline 与工程基础
+  → 阶段 1：版本化评测集
+  → 阶段 2：数据和索引版本化
+  → 阶段 3：Retriever/Reranker 固化
+  → 阶段 4：Oracle + Planner + Fusion
+
+只有阶段 4 通过
+  → 阶段 5：Controlled Agentic RAG
+      → 手写 Tool Calling Loop / Tool Registry
+  → 阶段 6：Generation / Citation / Security
+  → 阶段 7：API / 条件式 LangGraph / MCP
+  → 阶段 8：Observability / Serving
+
+只有出现模型能力瓶颈
+  → 阶段 9：LoRA/QLoRA
+</code></pre>
+<p>当前下一步唯一建议：先完成阶段 0 和阶段 1 的设计与最小实现，然后进行阶段 4 所需的 Oracle/Fusion 实验准备。暂时不要实现 LangGraph、MCP、LoRA 或 vLLM。</p>
+<h2>9. 参考工程与官方资料</h2>
+<ul>
+<li>Haystack：https://github.com/deepset-ai/haystack</li>
+<li>Haystack DocumentJoiner：https://github.com/deepset-ai/haystack/blob/main/haystack/components/joiners/document_joiner.py</li>
+<li>RAGFlow Quickstart：https://github.com/infiniflow/ragflow/blob/main/docs/quickstart.mdx</li>
+<li>RAGFlow Retrieval Testing：https://github.com/infiniflow/ragflow/blob/main/docs/guides/dataset/retrieval_testing.md</li>
+<li>Pyserini：https://github.com/castorini/pyserini</li>
+<li>Azure Agentic Retrieval：https://learn.microsoft.com/en-us/azure/search/agentic-retrieval-overview</li>
+<li>LangSmith Evaluation：https://docs.langchain.com/langsmith/evaluation-types</li>
+<li>LangGraph：https://www.langchain.com/oss-overview</li>
+<li>Phoenix：https://github.com/Arize-ai/phoenix</li>
+<li>Pydantic Models：https://github.com/pydantic/pydantic/blob/main/docs/concepts/models.md</li>
+<li>FastAPI：https://github.com/fastapi/fastapi</li>
+<li>OpenAI Function Calling：https://developers.openai.com/api/docs/guides/function-calling</li>
+<li>MCP Tools Specification：https://modelcontextprotocol.io/specification/2025-06-18/server/tools</li>
+<li>MCP Server Specification：https://modelcontextprotocol.io/specification/draft/server/index</li>
+<li>MCP Structured Output：https://github.com/modelcontextprotocol/python-sdk/blob/main/docs/servers/structured-output.md</li>
+<li>OWASP Prompt Injection：https://genai.owasp.org/llmrisk/llm01-prompt-injection/</li>
+<li>Hugging Face PEFT：https://huggingface.co/docs/peft/en/methods/overview</li>
+<li>vLLM GPU Installation：https://docs.vllm.ai/en/latest/getting_started/installation/gpu/</li>
+</ul>
+<div class="footer-note">Project 2 长期完善路线 · v1.1 · 2026-10-01</div>
+</body>
+</html>

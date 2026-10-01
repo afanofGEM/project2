@@ -1,0 +1,270 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "bank_planner_dev_v1",
+  "split": "dev",
+  "locked": false,
+  "description": "Planner 专项开发集。由 bank_eval_natural_v1 中已核验事实组合成新的复杂问题，用于调试 Planner 与 Fusion，不用于最终验收。",
+  "corpus_sha256": "95AB6DC27DD096EF39097BBF17966CF68D84E3C4D4DB133E6D5EA0F7AA462F71",
+  "cases": [
+    {
+      "id": "planner_dev_001",
+      "query": "我已经有一个Ⅰ类账户，如果再开户应该开什么类型？Ⅱ、Ⅲ类账户向非绑定账户转账和消费缴费又有哪些日、年限额？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["01_个人账户综合服务协议.pdf_3", "01_个人账户综合服务协议.pdf_4"],
+      "expected_points": ["同一客户只能开立一个Ⅰ类账户", "再次开户应开立Ⅱ类或Ⅲ类账户", "日累计限额合计2000元", "年累计限额合计5万元"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "已有Ⅰ类账户后再次开户应开立什么类型的账户？", "required_evidence": ["01_个人账户综合服务协议.pdf_3"]},
+        {"id": "gold_2", "query": "Ⅱ、Ⅲ类账户向非绑定账户转账和消费缴费的日累计和年累计限额是多少？", "required_evidence": ["01_个人账户综合服务协议.pdf_4"]}
+      ],
+      "source_case_ids": ["bank_eval_008", "bank_eval_026"]
+    },
+    {
+      "id": "planner_dev_002",
+      "query": "开户时没有领取实体借记卡会限制哪些场景？如果账户开户后半年一直没有交易，非柜面业务怎样恢复？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["01_个人账户综合服务协议.pdf_8", "01_个人账户综合服务协议.pdf_27"],
+      "expected_points": ["不能持卡在ATM、POS终端和柜台等渠道使用", "后续可以申请补配借记卡", "6个月内无交易记录可暂停非柜面业务", "重新核实身份后恢复"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "开户时没有领取实体借记卡会限制哪些使用场景，之后能否补领？", "required_evidence": ["01_个人账户综合服务协议.pdf_8"]},
+        {"id": "gold_2", "query": "新开账户半年无交易后，暂停的非柜面业务怎样恢复？", "required_evidence": ["01_个人账户综合服务协议.pdf_27"]}
+      ],
+      "source_case_ids": ["bank_eval_027", "bank_eval_029"]
+    },
+    {
+      "id": "planner_dev_003",
+      "query": "已有Ⅰ类账户后再开户应选什么账户类型？如果新账户一直没用，多久可能暂停非柜面业务，如何恢复？",
+      "task_type": "conditional_composition",
+      "evidence_mode": "all_required",
+      "required_evidence": ["01_个人账户综合服务协议.pdf_3", "01_个人账户综合服务协议.pdf_27"],
+      "expected_points": ["再次开户应开立Ⅱ类或Ⅲ类账户", "6个月内无交易记录可暂停非柜面业务", "重新核实身份后恢复"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "已有Ⅰ类账户后再次开户应选择什么账户类型？", "required_evidence": ["01_个人账户综合服务协议.pdf_3"]},
+        {"id": "gold_2", "query": "新开银行账户多久无交易可能暂停非柜面业务，怎样恢复？", "required_evidence": ["01_个人账户综合服务协议.pdf_27"]}
+      ],
+      "source_case_ids": ["bank_eval_008", "bank_eval_029"]
+    },
+    {
+      "id": "planner_dev_004",
+      "query": "Ⅱ、Ⅲ类账户向非绑定账户转账的限额是多少？没有领取实体卡是否还能在ATM、POS和柜台持卡使用？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["01_个人账户综合服务协议.pdf_4", "01_个人账户综合服务协议.pdf_8"],
+      "expected_points": ["日累计限额合计2000元", "年累计限额合计5万元", "未领取实体卡不能在ATM、POS和柜台持卡使用", "后续可以申请补配借记卡"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "Ⅱ、Ⅲ类账户向非绑定账户转账和消费缴费的限额是多少？", "required_evidence": ["01_个人账户综合服务协议.pdf_4"]},
+        {"id": "gold_2", "query": "没有领取实体借记卡会影响哪些持卡使用场景？", "required_evidence": ["01_个人账户综合服务协议.pdf_8"]}
+      ],
+      "source_case_ids": ["bank_eval_026", "bank_eval_027"]
+    },
+    {
+      "id": "planner_dev_005",
+      "query": "民生信用卡正式挂失生效前发生的盗刷损失通常由谁承担？小额免密免签功能又可以通过哪些渠道关闭？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_11", "04_信用卡综合服务合约.pdf_6"],
+      "expected_points": ["挂失生效前损失原则上由持卡人承担", "银行有法定过错或另有约定的除外", "可以通过全民生活APP关闭", "可以通过银行服务热线关闭"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡挂失生效前的盗刷风险和损失由谁承担？", "required_evidence": ["04_信用卡综合服务合约.pdf_11"]},
+        {"id": "gold_2", "query": "民生信用卡小额免密免签可以通过哪些渠道关闭？", "required_evidence": ["04_信用卡综合服务合约.pdf_6"]}
+      ],
+      "source_case_ids": ["bank_eval_010", "bank_eval_034"]
+    },
+    {
+      "id": "planner_dev_006",
+      "query": "民生信用卡的免息还款期最长多久？办理分期后提前还款可能怎样收取违约金和利息？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_13", "04_信用卡综合服务合约.pdf_65"],
+      "expected_points": ["免息还款期最长51个自然日", "可按剩余未摊销本金的0%至5%收取违约金", "可能收取提前还款当期分期利息", "以办理分期时协议为准"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡免息还款期最长是多少天？", "required_evidence": ["04_信用卡综合服务合约.pdf_13"]},
+        {"id": "gold_2", "query": "民生信用卡分期提前还款的违约金和利息怎样收取？", "required_evidence": ["04_信用卡综合服务合约.pdf_65"]}
+      ],
+      "source_case_ids": ["bank_eval_003", "bank_eval_004"]
+    },
+    {
+      "id": "planner_dev_007",
+      "query": "信用卡账单没有全部还清时如何计息？审核通过当天先绑定支付渠道使用后，实体卡未激活又有什么限制？",
+      "task_type": "conditional_composition",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_13", "04_信用卡综合服务合约.pdf_8"],
+      "expected_points": ["未全额还款不再享受免息还款期", "已偿还和未偿还部分按规则计息", "开通当日可取得卡号并绑定指定渠道", "实体卡激活前存在交易限制"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡账单到期未全部还清时怎样计息？", "required_evidence": ["04_信用卡综合服务合约.pdf_13"]},
+        {"id": "gold_2", "query": "民生信用卡审核通过当天绑定支付渠道后，实体卡未激活有什么限制？", "required_evidence": ["04_信用卡综合服务合约.pdf_8"]}
+      ],
+      "source_case_ids": ["bank_eval_011", "bank_eval_035"]
+    },
+    {
+      "id": "planner_dev_008",
+      "query": "怎样关闭信用卡小额免密免签？如果一直没收到账单且对交易有异议，是否可以先不还款？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_6", "04_信用卡综合服务合约.pdf_17", "04_信用卡综合服务合约.pdf_18"],
+      "expected_points": ["可通过全民生活APP或银行服务热线关闭", "不能以未收到账单为由拒绝还款", "15个自然日未收到账单应主动查询或索取", "交易异议调查期间仍应按时还款"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡小额免密免签可以通过什么渠道关闭？", "required_evidence": ["04_信用卡综合服务合约.pdf_6"]},
+        {"id": "gold_2", "query": "未收到账单且对交易有异议时，民生信用卡是否仍需按时还款？", "required_evidence": ["04_信用卡综合服务合约.pdf_17", "04_信用卡综合服务合约.pdf_18"]}
+      ],
+      "source_case_ids": ["bank_eval_034", "bank_eval_036"]
+    },
+    {
+      "id": "planner_dev_009",
+      "query": "民生信用卡挂失生效前的盗刷损失如何承担？如果账单没收到并且交易有异议，还款义务会不会暂停？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_11", "04_信用卡综合服务合约.pdf_17", "04_信用卡综合服务合约.pdf_18"],
+      "expected_points": ["挂失生效前损失原则上由持卡人承担", "银行有法定过错或另有约定的除外", "未收到账单不能作为拒绝还款理由", "异议调查期间仍应按时还款"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡挂失生效前发生的盗刷损失由谁承担？", "required_evidence": ["04_信用卡综合服务合约.pdf_11"]},
+        {"id": "gold_2", "query": "民生信用卡未收到账单且交易有异议时是否仍需还款？", "required_evidence": ["04_信用卡综合服务合约.pdf_17", "04_信用卡综合服务合约.pdf_18"]}
+      ],
+      "source_case_ids": ["bank_eval_010", "bank_eval_036"]
+    },
+    {
+      "id": "planner_dev_010",
+      "query": "信用卡审核通过当天能否先绑定微信或支付宝？如果之后办理分期并提前还款，银行可能怎样收费？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["04_信用卡综合服务合约.pdf_8", "04_信用卡综合服务合约.pdf_65"],
+      "expected_points": ["开通当日可取得卡号并绑定指定渠道", "实体卡激活前存在交易限制", "提前还款违约金可为剩余未摊销本金的0%至5%", "可能收取当期分期利息"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "民生信用卡审核通过当天能否取得卡号并绑定指定支付渠道？", "required_evidence": ["04_信用卡综合服务合约.pdf_8"]},
+        {"id": "gold_2", "query": "民生信用卡分期提前还款可能收取哪些费用？", "required_evidence": ["04_信用卡综合服务合约.pdf_65"]}
+      ],
+      "source_case_ids": ["bank_eval_035", "bank_eval_004"]
+    },
+    {
+      "id": "planner_dev_011",
+      "query": "使用农业银行网银和电话银行时怎样避免进入假网站或拨打假电话？发生个人信息泄露后银行会怎样通知和补救？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["06_电子银行个人客户服务协议.pdf_3", "06_电子银行个人客户服务协议.pdf_13"],
+      "expected_points": ["直接登录农业银行官方网站", "不要通过邮件或其他网站链接登录", "电话银行拨打95599或官网公布号码", "银行及时补救并通过适当方式通知客户"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "使用农业银行网上银行和电话银行时怎样防范假网站和假电话？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_3"]},
+        {"id": "gold_2", "query": "农业银行电子银行发生个人信息泄露后会采取哪些补救和通知措施？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_13"]}
+      ],
+      "source_case_ids": ["bank_eval_019", "bank_eval_020"]
+    },
+    {
+      "id": "planner_dev_012",
+      "query": "未成年人能否自己申请农业银行网络金融业务？如果认证工具可能泄露，又应该立即采取什么措施？",
+      "task_type": "conditional_composition",
+      "evidence_mode": "all_required",
+      "required_evidence": ["06_电子银行个人客户服务协议.pdf_2", "06_电子银行个人客户服务协议.pdf_6"],
+      "expected_points": ["未成年人由监护人代为申请和办理", "及时通知银行", "更换、挂失或重置认证工具", "银行可以冻结相关服务"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "未成年人如何申请农业银行网络金融业务？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_2"]},
+        {"id": "gold_2", "query": "农业银行电子银行认证工具可能泄露时应采取什么措施？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_6"]}
+      ],
+      "source_case_ids": ["bank_eval_039", "bank_eval_040"]
+    },
+    {
+      "id": "planner_dev_013",
+      "query": "拖欠农业银行网络金融服务费会怎样中止或解除协议？如果同时发生个人信息泄露，银行需要采取哪些措施？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["06_电子银行个人客户服务协议.pdf_9", "06_电子银行个人客户服务协议.pdf_13"],
+      "expected_points": ["未按时支付费用会中止服务", "原因消除后自动恢复", "持续1年以上银行有权解除协议", "信息泄露后及时补救并通知客户"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "拖欠农业银行网络金融服务费会怎样中止、恢复或解除协议？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_9"]},
+        {"id": "gold_2", "query": "农业银行电子银行发生个人信息泄露后会采取什么措施？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_13"]}
+      ],
+      "source_case_ids": ["bank_eval_041", "bank_eval_020"]
+    },
+    {
+      "id": "planner_dev_014",
+      "query": "怎样识别农业银行网银和电话银行的正规入口？如果网络金融服务费长期未交，服务如何恢复、协议又何时可能解除？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["06_电子银行个人客户服务协议.pdf_3", "06_电子银行个人客户服务协议.pdf_9"],
+      "expected_points": ["直接登录农业银行官网且不从外部链接进入", "电话银行拨打95599或官网公布号码", "补交并消除原因后自动恢复", "持续1年以上银行有权解除协议"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "如何识别农业银行网银和电话银行的正规入口？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_3"]},
+        {"id": "gold_2", "query": "农业银行网络金融服务费拖欠后服务怎样恢复，多久可能解除协议？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_9"]}
+      ],
+      "source_case_ids": ["bank_eval_019", "bank_eval_041"]
+    },
+    {
+      "id": "planner_dev_015",
+      "query": "农业银行电子认证工具可能泄露时应怎么办？网络金融服务费欠缴导致服务中止后又怎样恢复？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["06_电子银行个人客户服务协议.pdf_6", "06_电子银行个人客户服务协议.pdf_9"],
+      "expected_points": ["及时通知银行并更换、挂失或重置认证工具", "银行可以冻结相关服务", "欠费会中止服务", "原因消除后自动恢复"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "农业银行电子认证工具可能泄露时应采取什么措施？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_6"]},
+        {"id": "gold_2", "query": "农业银行网络金融服务因欠费中止后怎样恢复？", "required_evidence": ["06_电子银行个人客户服务协议.pdf_9"]}
+      ],
+      "source_case_ids": ["bank_eval_040", "bank_eval_041"]
+    },
+    {
+      "id": "planner_dev_016",
+      "query": "开通中国银行手机号转账需要哪些账户和身份条件？更换手机号后原来的关联又该怎样处理？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["07_手机号转账服务协议.pdf_3", "07_手机号转账服务协议.pdf_5", "07_手机号转账服务协议.pdf_6"],
+      "expected_points": ["使用本人预留手机号码并关联本人个人人民币结算账户", "线上办理需要身份认证", "及时办理变更或注销", "先注销原手机号关联再用新号码重新注册"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "开通中国银行手机号转账需要哪些账户、手机号和身份认证条件？", "required_evidence": ["07_手机号转账服务协议.pdf_3", "07_手机号转账服务协议.pdf_5"]},
+        {"id": "gold_2", "query": "更换手机号后中国银行手机号转账的原关联怎样处理？", "required_evidence": ["07_手机号转账服务协议.pdf_5", "07_手机号转账服务协议.pdf_6"]}
+      ],
+      "source_case_ids": ["bank_eval_005", "bank_eval_012"]
+    },
+    {
+      "id": "planner_dev_017",
+      "query": "别人只知道手机号能否直接从绑定账户扣钱？如果该号码已被别人在其他银行注册，重新开通时会怎样核查？",
+      "task_type": "conditional_composition",
+      "evidence_mode": "all_required",
+      "required_evidence": ["07_手机号转账服务协议.pdf_2", "07_手机号转账服务协议.pdf_4"],
+      "expected_points": ["不能仅凭手机号直接扣款", "需要验证码或付款人确认", "号码已注册时等待人工核查", "核查通过成功、不通过失败"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "别人只知道手机号能否直接通过跨行收款从绑定账户扣钱？", "required_evidence": ["07_手机号转账服务协议.pdf_2"]},
+        {"id": "gold_2", "query": "手机号已被别人在其他银行注册时，重新开通手机号转账会怎样核查？", "required_evidence": ["07_手机号转账服务协议.pdf_4"]}
+      ],
+      "source_case_ids": ["bank_eval_042", "bank_eval_043"]
+    },
+    {
+      "id": "planner_dev_018",
+      "query": "个人贷款想提前一次性结清需要提前多久申请并取得什么同意？正常还款日当天又最晚几点前要把钱存入账户？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["10_个人贷款合同.pdf_10", "10_个人贷款合同.pdf_9"],
+      "expected_points": ["至少提前三十天书面申请", "取得贷款人书面同意", "按实际借款期限和约定利率支付利息", "还款日17:00前存入足额资金"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "个人贷款提前一次性结清需要提前多久申请并取得什么同意？", "required_evidence": ["10_个人贷款合同.pdf_10"]},
+        {"id": "gold_2", "query": "个人贷款还款日当天最晚几点前要把足额资金存入还款账户？", "required_evidence": ["10_个人贷款合同.pdf_9"]}
+      ],
+      "source_case_ids": ["bank_eval_014", "bank_eval_051"]
+    },
+    {
+      "id": "planner_dev_019",
+      "query": "个人贷款采用受托支付和自主支付时分别要准备哪些资料？逾期与把贷款用于合同外用途的罚息上浮比例是否相同？",
+      "task_type": "comparison",
+      "evidence_mode": "all_required",
+      "required_evidence": ["10_个人贷款合同.pdf_6", "10_个人贷款合同.pdf_7", "10_个人贷款合同.pdf_28"],
+      "expected_points": ["受托支付需支付信息、委托书或交易证明材料", "自主支付需保留用途证明和资金使用凭证", "逾期罚息上浮50%", "违约使用罚息上浮100%"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "个人贷款采用受托支付和自主支付时分别需要准备或保留什么资料？", "required_evidence": ["10_个人贷款合同.pdf_6", "10_个人贷款合同.pdf_7"]},
+        {"id": "gold_2", "query": "个人贷款逾期和违约使用贷款时的罚息上浮比例分别是多少？", "required_evidence": ["10_个人贷款合同.pdf_28"]}
+      ],
+      "source_case_ids": ["bank_eval_052", "bank_eval_053"]
+    },
+    {
+      "id": "planner_dev_020",
+      "query": "个人贷款提前结清需要满足哪些申请和同意条件？贷款相关应税款项的发票又应在多久内申请，开错由谁承担？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["10_个人贷款合同.pdf_10", "10_个人贷款合同.pdf_32"],
+      "expected_points": ["至少提前三十天书面申请并取得贷款人书面同意", "按实际期限和约定利率支付利息", "收到应税款项后360日内申请发票", "开票错误按责任方承担并处理"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "个人贷款提前一次性结清需要满足哪些申请、同意和付息条件？", "required_evidence": ["10_个人贷款合同.pdf_10"]},
+        {"id": "gold_2", "query": "个人贷款应税款项发票应在多久内申请，开票错误由谁承担？", "required_evidence": ["10_个人贷款合同.pdf_32"]}
+      ],
+      "source_case_ids": ["bank_eval_014", "bank_eval_054"]
+    }
+  ]
+}

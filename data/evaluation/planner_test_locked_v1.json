@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "bank_planner_test_locked_v1",
+  "split": "test_locked",
+  "locked": true,
+  "description": "Planner 专项锁定测试集。不得用于 Prompt、Fusion 或参数调试；仅在开发方案冻结后运行。",
+  "corpus_sha256": "95AB6DC27DD096EF39097BBF17966CF68D84E3C4D4DB133E6D5EA0F7AA462F71",
+  "cases": [
+    {
+      "id": "planner_test_001",
+      "query": "中国银行银行卡正式挂失后能否撤销？华夏银行卡被ATM吞掉后又应该去哪里领回？",
+      "task_type": "cross_document",
+      "evidence_mode": "all_required",
+      "required_evidence": ["02_银行卡挂失客户须知.pdf_2", "03_借记卡章程.pdf_4"],
+      "expected_points": ["正式挂失后可以办理撤销", "本人持挂失申请书客户联和有效身份证件办理", "吞卡后到ATM所属银行指定网点领回", "逾期未领需到发卡银行办理挂失补卡"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "中国银行银行卡正式挂失后能否撤销，怎样办理？", "required_evidence": ["02_银行卡挂失客户须知.pdf_2"]},
+        {"id": "gold_2", "query": "华夏银行卡被ATM吞掉后应去哪里领回，逾期未领怎么办？", "required_evidence": ["03_借记卡章程.pdf_4"]}
+      ],
+      "source_case_ids": ["bank_eval_002", "bank_eval_009"]
+    },
+    {
+      "id": "planner_test_002",
+      "query": "中国银行正式挂失后怎样领取新卡、核验最多可能延后多久？华夏银行发现借记卡可能被冒用时又会怎样处理？",
+      "task_type": "cross_document",
+      "evidence_mode": "all_required",
+      "required_evidence": ["02_银行卡挂失客户须知.pdf_2", "03_借记卡章程.pdf_6"],
+      "expected_points": ["持挂失申请书客户联到指定网点领取", "原则上延期不超过1个月且特殊情况除外", "华夏银行可以暂时止付并核实", "持卡人应立即核实并采取挂失等措施"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "中国银行正式挂失后怎样领取新卡，核验开户信息最多可能延后多久？", "required_evidence": ["02_银行卡挂失客户须知.pdf_2"]},
+        {"id": "gold_2", "query": "华夏银行发现借记卡可能被冒用时，银行和持卡人分别应怎样处理？", "required_evidence": ["03_借记卡章程.pdf_6"]}
+      ],
+      "source_case_ids": ["bank_eval_031", "bank_eval_033"]
+    },
+    {
+      "id": "planner_test_003",
+      "query": "华夏借记卡能否透支、芯片卡最长有效期多久？建设银行普通信用卡和金卡又要刷几笔才能免当年年费？",
+      "task_type": "cross_document",
+      "evidence_mode": "all_required",
+      "required_evidence": ["03_借记卡章程.pdf_0", "05_信用卡收费标准.pdf_1"],
+      "expected_points": ["华夏借记卡不允许透支", "IC卡有效期最长10年并以卡面日期为准", "建行普通卡和金卡每年完成3笔交易可免当年年费", "交易可以是消费或取现"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "华夏借记卡能否透支，IC卡最长有效期多久？", "required_evidence": ["03_借记卡章程.pdf_0"]},
+        {"id": "gold_2", "query": "建设银行普通信用卡和金卡完成多少笔什么类型的交易可免当年年费？", "required_evidence": ["05_信用卡收费标准.pdf_1"]}
+      ],
+      "source_case_ids": ["bank_eval_032", "bank_eval_016"]
+    },
+    {
+      "id": "planner_test_004",
+      "query": "建设银行信用卡在境外通过银联取现怎样收费？卡片挂失服务费又是多少？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["05_信用卡收费标准.pdf_3", "05_信用卡收费标准.pdf_4"],
+      "expected_points": ["境外银联取现为12元加取款金额的1%", "最低14元", "最高112元", "挂失服务费50元每卡"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "建设银行信用卡在境外通过银联网络取现怎样收费？", "required_evidence": ["05_信用卡收费标准.pdf_3"]},
+        {"id": "gold_2", "query": "建设银行信用卡卡片挂失服务费是多少？", "required_evidence": ["05_信用卡收费标准.pdf_4"]}
+      ],
+      "source_case_ids": ["bank_eval_017", "bank_eval_018"]
+    },
+    {
+      "id": "planner_test_005",
+      "query": "建行不同等级信用卡分别刷多少笔可以免年费？信用卡取现是否有免息期、通常按什么日利率计息？",
+      "task_type": "comparison",
+      "evidence_mode": "all_required",
+      "required_evidence": ["05_信用卡收费标准.pdf_0", "05_信用卡收费标准.pdf_5"],
+      "expected_points": ["普通卡和金卡3笔", "标准白金卡10笔", "钛白金卡6笔", "预借现金不享受免息期", "通常按日利率万分之五计息并按月计收复利"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "建设银行不同等级信用卡分别完成多少笔交易可以免当年年费？", "required_evidence": ["05_信用卡收费标准.pdf_0"]},
+        {"id": "gold_2", "query": "建设银行信用卡取现是否享受免息期，通常按什么日利率计息？", "required_evidence": ["05_信用卡收费标准.pdf_5"]}
+      ],
+      "source_case_ids": ["bank_eval_037", "bank_eval_038"]
+    },
+    {
+      "id": "planner_test_006",
+      "query": "农业银行个人自动转账支持哪些方式、同日多笔按什么顺序处理？相关应税款项交完后最迟多久可以申请发票？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["08_个人自动转账业务协议.pdf_2", "08_个人自动转账业务协议.pdf_6"],
+      "expected_points": ["支持指定金额、留存金额差额、留存金额差额取整和补足余额转账", "同日多笔按加入先后顺序处理", "前一笔失败仍继续尝试下一笔", "收到应税款项后360日内申请发票"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "农业银行个人自动转账支持哪些方式，同日多笔转账按什么顺序处理？", "required_evidence": ["08_个人自动转账业务协议.pdf_2"]},
+        {"id": "gold_2", "query": "农业银行个人自动转账业务的应税款项交完后最迟多久可以申请发票？", "required_evidence": ["08_个人自动转账业务协议.pdf_6"]}
+      ],
+      "source_case_ids": ["bank_eval_045", "bank_eval_046", "bank_eval_047"]
+    },
+    {
+      "id": "planner_test_007",
+      "query": "自动转账扣款时余额不足会不会补扣？农业银行快捷支付授权解除后支付机构还能否按原协议继续扣款？",
+      "task_type": "cross_document",
+      "evidence_mode": "all_required",
+      "required_evidence": ["08_个人自动转账业务协议.pdf_2", "09_快捷支付授权扣款协议.pdf_11"],
+      "expected_points": ["余额不足时转账操作不成功", "银行不再补扣", "快捷支付授权可以在线解除", "解除后不再依据该协议扣款"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "农业银行自动转账扣款时余额不足会怎样，之后是否补扣？", "required_evidence": ["08_个人自动转账业务协议.pdf_2"]},
+        {"id": "gold_2", "query": "农业银行快捷支付授权解除后是否还能依据原协议继续扣款？", "required_evidence": ["09_快捷支付授权扣款协议.pdf_11"]}
+      ],
+      "source_case_ids": ["bank_eval_001", "bank_eval_006"]
+    },
+    {
+      "id": "planner_test_008",
+      "query": "农业银行快捷支付可以用哪些方式验证身份？扣款失败时哪些情形银行可以不承担责任？",
+      "task_type": "multi_intent",
+      "evidence_mode": "all_required",
+      "required_evidence": ["09_快捷支付授权扣款协议.pdf_3", "09_快捷支付授权扣款协议.pdf_4"],
+      "expected_points": ["可使用密码、数字证书、电子签名、一次性密码或生物特征等方式", "错误或异常指令可免责", "余额不足或账户状态异常可免责", "不可抗力或不可归责于银行时可免责"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "农业银行快捷支付可以使用哪些方式验证交易身份？", "required_evidence": ["09_快捷支付授权扣款协议.pdf_3"]},
+        {"id": "gold_2", "query": "农业银行快捷支付扣款失败时哪些情形银行可以不承担责任？", "required_evidence": ["09_快捷支付授权扣款协议.pdf_4"]}
+      ],
+      "source_case_ids": ["bank_eval_048", "bank_eval_049"]
+    },
+    {
+      "id": "planner_test_009",
+      "query": "发现快捷支付不是本人操作时应找谁处理、验证渠道不安全造成的损失由谁负责？农业银行非冻结资金存款证明又会不会冻结资产？",
+      "task_type": "cross_document",
+      "evidence_mode": "all_required",
+      "required_evidence": ["09_快捷支付授权扣款协议.pdf_3", "09_快捷支付授权扣款协议.pdf_8", "11_个人存款证明申请须知.pdf_1"],
+      "expected_points": ["及时向支付机构查询或投诉并可向公安机关报案", "支付机构与银行核对", "验证方式或渠道不安全由支付机构承担责任", "非冻结资金存款证明用于证明某一时间点且不冻结资产"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "发现农业银行快捷支付不是本人操作时应找谁处理，验证渠道不安全造成损失由谁负责？", "required_evidence": ["09_快捷支付授权扣款协议.pdf_3", "09_快捷支付授权扣款协议.pdf_8"]},
+        {"id": "gold_2", "query": "农业银行非冻结资金存款证明是否会冻结资产？", "required_evidence": ["11_个人存款证明申请须知.pdf_1"]}
+      ],
+      "source_case_ids": ["bank_eval_050", "bank_eval_055"]
+    },
+    {
+      "id": "planner_test_010",
+      "query": "非冻结与冻结资金存款证明有什么区别、冻结到期后何时解冻？如果想在到期前提前解除冻结又需要什么条件？",
+      "task_type": "conditional_composition",
+      "evidence_mode": "all_required",
+      "required_evidence": ["11_个人存款证明申请须知.pdf_1", "11_个人存款证明申请须知.pdf_2"],
+      "expected_points": ["非冻结证明对应某一时间点且不冻结资产", "冻结证明对应某一时间段并冻结资产", "到期后T+1日自动解冻", "提前解冻需要返还全部个人存款证明凭证"],
+      "gold_subqueries": [
+        {"id": "gold_1", "query": "农业银行非冻结与冻结资金存款证明有什么区别，到期后何时解冻？", "required_evidence": ["11_个人存款证明申请须知.pdf_1", "11_个人存款证明申请须知.pdf_2"]},
+        {"id": "gold_2", "query": "农业银行个人存款证明到期前提前解除冻结需要什么条件？", "required_evidence": ["11_个人存款证明申请须知.pdf_2"]}
+      ],
+      "source_case_ids": ["bank_eval_055", "bank_eval_007"]
+    }
+  ]
+}

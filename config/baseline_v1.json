@@ -1,0 +1,54 @@
+{
+  "baseline_id": "bank_rag_baseline_v1",
+
+  "dataset": {
+    "path": "data/evaluation/bank_eval_natural_v1.json",
+    "sha256": "AA44279F28AFB446B0A7B6E4772216F2F8BBF79B3655DC2FC448812CC9D9B56D"
+  },
+
+  "planner_evaluation": {
+    "dev": {
+      "path": "data/evaluation/planner_dev_v1.json",
+      "sha256": "1FC1D46A836A473A83021AD3FA1AA92D58A341D973D80BCE6718F66EB47509DE"
+    },
+    "locked": {
+      "path": "data/evaluation/planner_test_locked_v1.json",
+      "sha256": "898A3832E9ED28F213C913E483FA15F7A3326ABB5B318348786C07199D1E2955"
+    }
+  },
+
+  "chunks": {
+    "path": "outputs/chunks_info.json",
+    "sha256": "95AB6DC27DD096EF39097BBF17966CF68D84E3C4D4DB133E6D5EA0F7AA462F71",
+    "chunk_size": 500
+  },
+
+  "models": {
+    "embedding": "BAAI/bge-small-zh-v1.5",
+    "reranker": "BAAI/bge-reranker-base",
+    "planner": "Qwen/Qwen2.5-1.5B-Instruct",
+    "generator": "Qwen/Qwen2.5-1.5B-Instruct"
+  },
+
+  "retrieval": {
+    "rank_constant": 60,
+    "per_retriever_k": 20,
+    "final_k": 5,
+    "fusion": {
+      "default_strategy": "round_robin",
+      "locked_test_candidate": "distribution_based_original_anchor",
+      "candidate_status": "frozen_after_dev_and_natural_regression",
+      "selection_metric": "Complete@5",
+      "safety_metric": "MRR@5"
+    }
+  },
+
+  "evidence_guard": {
+    "threshold": 0.9
+  },
+
+  "prompt": {
+    "version": "rag_prompt_v1",
+    "path": "src/prompt/rag_prompt.py"
+  }
+}

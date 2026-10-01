@@ -1,84 +1,290 @@
+from src.utils.load_data import (pdf_to_list,paragraph_chunks_with_source)
+from src.retriever.vector_retriever import VectorRetriever
+from src.retriever.bm25_retriever import BM25Retriever
+from src.retriever.hybrid_retriever import HybridRetriever
+from src.reranker.reranker import CrossEncoderReranker
+from src.pipeline.rag_pipeline import RAGPipeline
+from src.generator.llm_generator import LLMGenerator
+from src.query_processing.query_planner import QueryPlanner
+import json
 from pathlib import Path
-from src.document_loader_1 import pdf_to_list
-from src.md_to_chunks_2 import chunks_with_source
-from src.embedding_3 import chunks_embedding,multi_query_embedding
-from src.embedded_store_4 import build_index
-from src.vector_retriever_5 import search
-from src.bm25_retriever import BM25Retriever
 
-texts_list = pdf_to_list("data/real")
-'''
-[
-    {
-        "text": "PDF全文……",
-        "source": "01_个人账户综合服务协议.pdf",
-        "document_type": "个人账户服务",
-        "source_org": "中国银行",
-        "updated_at": "2025",
-        "source_url": "https://..."
-    },
-    ...
-]
-'''
-
-chunks_info = chunks_with_source(texts_list,chunk_size=100,overlap=20)
-'''
-[
-    {
-        "id": 0,
-        "text": "某一个chunk正文……",
-        "source": "01_个人账户综合服务协议.pdf",
-        "document_type": "个人账户服务",
-        "source_org": "中国银行",
-        "updated_at": "2025",
-        "source_url": "https://..."
-    },
-    ...
-]
-'''
+PROJECT_ROOT = Path(__file__).parent
+DATA_ROOT = PROJECT_ROOT / 'data' / 'real'
 
 
-'''Embedding + FAISS：Dense Retrieval / Vector Retrieval
-中文一般叫：稠密检索 / 向量检索 / 语义检索'''
-chunks_embedded = chunks_embedding(chunks_info)
-storehouse = build_index(chunks_embedded)
+def load_chunks()->list[dict]:
 
-print("texts_list count:", len(texts_list))
-print("chunks_info count:", len(chunks_info))
-print("chunks_embedded shape:", chunks_embedded.shape)
-print("FAISS vector count:", storehouse.ntotal)
+    # 1. 读取PDF文件
+    texts_list = pdf_to_list(DATA_ROOT)
 
-queries = [
-    "信用卡怎么免年费？",
-    "银行卡丢了怎么办？",
-    "转账限额是多少？",
-    "定期存款能不能提前取？",
-    "手机银行密码忘了怎么办？",
-]
-queries_embedded = multi_query_embedding(queries) #（num_query,embedding_dim)二维numpy向量
+    # 2. 按照PDF自然段切分
+    chunks_info = paragraph_chunks_with_source(
+        texts_list=texts_list,
+        chunk_size=500
+    )
 
-for id,query in enumerate(queries_embedded): #(embedding_dim)一维numpy数组
-    results = search(query=query.reshape(1,-1),chunks_info=chunks_info,
-                     storehouse=storehouse,top_k=3)
-    '''尺寸都是(1,top_k)因为是一条一条查询的'''
+    return chunks_info
+
+
+def build_pipeline(chunks_info:list[dict],
+                   use_reranker:bool=True,
+                   use_query_planner: bool = False,
+                   use_generator:bool=True)->RAGPipeline:
+
+    # 3. 初始化并建立向量索引
+    vectorretriever = VectorRetriever()
+    vectorretriever.fit(chunks_info)
+
+    # 4. 初始化并建立BM25索引
+    bm25retriever = BM25Retriever()
+    bm25retriever.fit(chunks_info)
+
+    # 5. 使用RRF融合两个Retriever
+    hybridretriever = HybridRetriever(
+        denseretriever=vectorretriever,
+        sparseretriever=bm25retriever,
+        rank_constant=60,
+        per_retriever_k=20
+    )
+
+    # 6. 根据参数决定是否使用Reranker
+    if use_reranker:
+        reranker = CrossEncoderReranker()
+    else:
+        reranker = None
+
+    # 7. 大语言模型生成器
+    # Query Planner和Answer Generator复用同一个Qwen
+    if use_query_planner or use_generator:
+
+        llm_generator = LLMGenerator(
+            model_name="Qwen/Qwen2.5-1.5B-Instruct"
+        )
+
+    else:
+        llm_generator = None
+
+    # 8.查询分割器
+    if use_query_planner:
+
+        query_planner = QueryPlanner(
+            generator=llm_generator,
+            max_subqueries=None
+        )
+
+    else:
+        query_planner = None
+
+
+    if use_generator:
+        generator = llm_generator
+    else:
+        generator = None
+
+    # 8. 创建完整Pipeline
+    pipeline = RAGPipeline(retriever=hybridretriever,
+                           reranker=reranker,
+                           query_planner=query_planner,
+                           generator=generator)
+    
+
+    return pipeline
+
+
+def print_results(result: dict) -> None:
 
     print("\n" + "=" * 80)
-    print("Query:", queries[id])
+    print("Query:")
+    print(result["query"])
 
-    '''从1开始计数'''
-    for rank, result in enumerate(results, start=1):
-        print(f"\nTop {rank}")
-        print(f"score: {result['score']:.4f}")
-        print(f"source: {result['source']}")
-        print(f"chunk_id: {result['id']}")
-        print(f"text: {result['text']}")
+    # 大语言模型最终回答
+    if "answer" in result:
+        print("\nAnswer:")
+        print(result["answer"])
+
+    # 大语言模型的回答依据chunk信息
+    if "used_citation" in result:
+        print("\nUsed citation")
+
+        for item in result["used_citation"]:
+
+            print(
+                item["citation_id"],
+                "->",
+                item["chunk_id"],
+                "->",
+                item["source"]
+            )
+
+    print("\nReranked Chunks:")
+    
+    for rank, chunk in enumerate(result["reranked_chunks"],start=1):
+        print("\n" + "-" * 80)
+        print(f"Top {rank}")
+        print("Chunk ID:",chunk["id"])
+        print("Source:",chunk["source"])
+
+        if "vector_retriever_score" in chunk:
+            print("Vector score:",f"{chunk['vector_retriever_score']:.4f}")
+
+        if "bm25_retriever_score" in chunk:
+            print("BM25 score:",f"{chunk['bm25_retriever_score']:.4f}")
+
+        if "rrf_score" in chunk:
+            print("RRF score:",f"{chunk['rrf_score']:.6f}")
+
+        if "reranker_score" in chunk:
+            print("Reranker score:",f"{chunk['reranker_score']:.4f}")
+
+        print("Text:",chunk["text"])
 
 
-'''BM25：Sparse Retrieval / Lexical Retrieval
-中文一般叫：稀疏检索 / 词法检索 / 关键词检索'''
-print('\n')
-print("This is BM25 Retrieval part")
-bm25retriever = BM25Retriever()
-bm25retriever.fit(chunks_info)
-results = bm25retriever.search(queries[0])
-print(results)
+def print_low_results(result: dict) -> None:
+
+    print("\n" + "=" * 80)
+    print("Mode:", result["mode"])
+    print("Query:", result["query"])
+
+    print("\nQuery Plan:")
+
+    print(
+        json.dumps(
+            result["query_plan"],
+            ensure_ascii=False,
+            indent=2
+        )
+    )
+
+    print("\nQuery Tasks:")
+
+    for query_task in result["query_tasks"]:
+
+        print(
+            query_task["query_id"],
+            "->",
+            query_task["query_text"]
+        )
+
+    print("\nExecution Summary:")
+
+    print(
+        "Query count:",
+        result["query_count"]
+    )
+
+    print(
+        "Retrieved chunk count:",
+        result["total_retrieved_chunk_count"]
+    )
+
+    print(
+        "Merged chunk count:",
+        result["merged_chunk_count"]
+    )
+
+    print(
+        "Duplicate chunk count:",
+        result["duplicate_chunk_count"]
+    )
+
+    print(
+        "Reranker pair count:",
+        result["reranker_pair_count"]
+    )
+
+    print(
+        "Planner latency:",
+        f"{result['planner_latency_seconds']:.3f}s"
+    )
+
+    print(
+        "Retrieval latency:",
+        f"{result['retrieval_latency_seconds']:.3f}s"
+    )
+
+    print(
+        "Reranker latency:",
+        f"{result['reranker_latency_seconds']:.3f}s"
+    )
+
+    print(
+        "Total latency:",
+        f"{result['total_latency_seconds']:.3f}s"
+    )
+
+    print("\nAccumulated Chunks:")
+
+    for rank, chunk in enumerate(
+        result["accumulated_chunks"],
+        start=1
+    ):
+
+        print("\n" + "-" * 80)
+        print("Accumulated Rank:", rank)
+        print("Chunk ID:", chunk["id"])
+        print("Source:", chunk["source"])
+
+        print(
+            "Matched query IDs:",
+            chunk["matched_query_ids"]
+        )
+
+        print(
+            "First bring query ID:",
+            chunk["first_bring_query_id"]
+        )
+
+        print(
+            "First bring reranker rank:",
+            chunk[
+                "first_bring_query_reranker_rank"
+            ]
+        )
+
+        print(
+            "Best reranker score:",
+            chunk["best_reranker_score"]
+        )
+
+        print("Query performance:")
+
+        print(
+            json.dumps(
+                chunk["diff_query_performance"],
+                ensure_ascii=False,
+                indent=2
+            )
+        )
+
+        print("Text:", chunk["text"])
+
+
+def main():
+
+    chunks_info = load_chunks()
+
+    pipeline = build_pipeline(chunks_info=chunks_info,
+                              use_reranker=True,
+                              use_query_planner=True,
+                              use_generator=False)
+
+    while True:
+        query = input("\n请输入问题，输入1退出：").strip()
+
+        if query.lower() == "1": break
+
+        if not query: 
+            print("问题不能为空") 
+            continue
+
+        result = pipeline.run_low(
+            query=query,
+            per_retriever_k=20
+        )
+
+        print_low_results(result)
+
+
+if __name__ == "__main__":
+    main()

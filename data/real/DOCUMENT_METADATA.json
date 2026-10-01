@@ -1,0 +1,78 @@
+{
+  "01_个人账户综合服务协议.pdf": {
+    "document_type": "个人账户服务",
+    "source_org": "中国银行",
+    "updated_at": "2025",
+    "source_url": "https://pic.bankofchina.com/bocappd/pbservice/202601/P020260109615510106614.pdf"
+  },
+
+  "02_银行卡挂失客户须知.pdf": {
+    "document_type": "银行卡挂失",
+    "source_org": "中国银行",
+    "updated_at": null,
+    "source_url": "https://www.boc.cn/ebanking/online/201310/P020210723336996476793.pdf"
+  },
+
+  "03_借记卡章程.pdf": {
+    "document_type": "借记卡",
+    "source_org": "华夏银行",
+    "updated_at": "2023",
+    "source_url": "https://www.hxb.com.cn/images/jrhx/khfw/zxgg/2023/01/06/06163050445E100116D165A51AA94C229E8D9684.pdf"
+  },
+
+  "04_信用卡综合服务合约.pdf": {
+    "document_type": "信用卡",
+    "source_org": "中国民生银行",
+    "updated_at": "2025-08",
+    "source_url": "https://creditcard.cmbc.com.cn/tyglweb/statics/tyglweb/home/cn/active/wap/wonderful/pdfs/1GRKHY8Y.pdf"
+  },
+
+  "05_信用卡收费标准.pdf": {
+    "document_type": "信用卡收费",
+    "source_org": "中国建设银行",
+    "updated_at": "2024",
+    "source_url": "https://us.ccb.com/cn/creditcard/news/upload/20240719165838759713.pdf"
+  },
+
+  "06_电子银行个人客户服务协议.pdf": {
+    "document_type": "电子银行",
+    "source_org": "中国农业银行",
+    "updated_at": null,
+    "source_url": "https://www.abchina.com/cn/PersonalServices/grzsc/zhkh/201912/P020220211569048870335.pdf"
+  },
+
+  "07_手机号转账服务协议.pdf": {
+    "document_type": "转账服务",
+    "source_org": "中国银行",
+    "updated_at": "2020",
+    "source_url": "https://www.boc.cn/pbservice/pb4/202012/P020201204853990084008.pdf"
+  },
+
+  "08_个人自动转账业务协议.pdf": {
+    "document_type": "自动转账",
+    "source_org": "中国农业银行",
+    "updated_at": "2024",
+    "source_url": "https://www.abchina.com/cn/PersonaLServices/zcxy221101/zfjs221101/202301/P020250107539334245114.pdf"
+  },
+
+  "09_快捷支付授权扣款协议.pdf": {
+    "document_type": "快捷支付",
+    "source_org": "中国农业银行",
+    "updated_at": "2023",
+    "source_url": "https://www.abchina.com/cn/PersonalServices/zcxy221101/zfjs221101/202311/P020231110537016241541.pdf"
+  },
+
+  "10_个人贷款合同.pdf": {
+    "document_type": "个人贷款",
+    "source_org": "中国农业银行",
+    "updated_at": "2023",
+    "source_url": "https://www.abchina.com/cn/PersonalServices/Loans/jkhtgs/202303/W020230320333834190555.pdf"
+  },
+
+  "11_个人存款证明申请须知.pdf": {
+    "document_type": "存款证明",
+    "source_org": "中国农业银行",
+    "updated_at": "2023",
+    "source_url": "https://www.abchina.com/cn/PersonaLServices/zcxy221101/zhkh221101/202301/P020230111446363779555.pdf"
+  }
+}

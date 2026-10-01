@@ -1,0 +1,1705 @@
+{
+  "summary": {
+    "total_cases": 61,
+    "execution_success_count": 61,
+    "valid_plan_count": 61,
+    "runtime_error_count": 0,
+    "fallback_count": 0,
+    "fallback_rate": 0.0,
+    "simple_count": 41,
+    "complex_count": 20,
+    "average_subquery_count": 1.3934426229508197,
+    "minimum_subquery_count": 1,
+    "maximum_subquery_count": 4,
+    "subquery_count_distribution": {
+      "1": 41,
+      "2": 18,
+      "4": 2
+    },
+    "average_latency_seconds": 7.172604255737512
+  },
+  "cases": [
+    {
+      "id": "bank_eval_001",
+      "query": "自动转账扣款时账户余额不足会怎样？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "自动转账扣款时账户余额不足会怎样？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账扣款时账户余额不足会怎样？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账扣款时账户余额不足会怎样？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.640623199997208,
+      "error": null
+    },
+    {
+      "id": "bank_eval_002",
+      "query": "银行卡正式挂失后还能撤销挂失吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "银行卡正式挂失后能否撤销挂失？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡正式挂失后能否撤销挂失？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡正式挂失后能否撤销挂失？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.556158200000937,
+      "error": null
+    },
+    {
+      "id": "bank_eval_003",
+      "query": "信用卡免息还款期最长有多少天？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡免息还款期最长有多少天？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡免息还款期最长有多少天？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡免息还款期最长有多少天？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.425822599998355,
+      "error": null
+    },
+    {
+      "id": "bank_eval_004",
+      "query": "信用卡分期提前还款违约金怎么收取？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡分期提前还款违约金怎么收取？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡分期提前还款违约金怎么收取？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡分期提前还款违约金怎么收取？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.436693799998466,
+      "error": null
+    },
+    {
+      "id": "bank_eval_005",
+      "query": "怎样开通手机号转账服务？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "怎样开通手机号转账服务？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"怎样开通手机号转账服务？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"怎样开通手机号转账服务？\"\n        }\n    ]\n}",
+      "latency_seconds": 4.894540199999028,
+      "error": null
+    },
+    {
+      "id": "bank_eval_006",
+      "query": "如何解除快捷支付授权？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "如何解除快捷支付授权？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"如何解除快捷支付授权？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"如何解除快捷支付授权？\"\n        }\n    ]\n}",
+      "latency_seconds": 4.928733299999294,
+      "error": null
+    },
+    {
+      "id": "bank_eval_007",
+      "query": "个人存款证明可以提前解除冻结吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人存款证明能否提前解除冻结？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人存款证明能否提前解除冻结？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人存款证明能否提前解除冻结？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.2282563999979175,
+      "error": null
+    },
+    {
+      "id": "bank_eval_008",
+      "query": "我已经在这家银行有一张功能齐全的卡了，还能再开一张同样的吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "我在这家银行已经有一张功能齐全的卡了，能否再开一张同样的卡片？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"我在这家银行已经有一张功能齐全的卡了，能否再开一张同样的卡片？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"我在这家银行已经有一张功能齐全的卡了，能否再开一张同样的卡片？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.021391800000856,
+      "error": null
+    },
+    {
+      "id": "bank_eval_009",
+      "query": "卡被取款机吞了，我应该去哪里把它拿回来？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "银行卡被取款机吞了后，应如何处理？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡被取款机吞了后，应如何处理？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡被取款机吞了后，应如何处理？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.7803609000002325,
+      "error": null
+    },
+    {
+      "id": "bank_eval_010",
+      "query": "民生信用卡遗失后，在正式挂失生效前发生的盗刷风险和损失由谁承担？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "民生信用卡遗失后，在正式挂失生效前发生的盗刷风险和损失由谁承担？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"民生信用卡遗失后，在正式挂失生效前发生的盗刷风险和损失由谁承担？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"民生信用卡遗失后，在正式挂失生效前发生的盗刷风险和损失由谁承担？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.954593599999498,
+      "error": null
+    },
+    {
+      "id": "bank_eval_011",
+      "query": "账单到期时没有全部还清，之前刷卡的金额还享受不计利息吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "账单到期时没有全部还清，之前刷卡的金额是否还能享受不计利息？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"账单到期时没有全部还清，之前刷卡的金额是否还能享受不计利息？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"账单到期时没有全部还清，之前刷卡的金额是否还能享受不计利息？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.780516599999828,
+      "error": null
+    },
+    {
+      "id": "bank_eval_012",
+      "query": "换了手机号码后，原来用号码收款的功能需要怎么处理？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "换手机号码后，如何处理原来的号码收款功能？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"换手机号码后，如何处理原来的号码收款功能？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"换手机号码后，如何处理原来的号码收款功能？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.6083754999999655,
+      "error": null
+    },
+    {
+      "id": "bank_eval_013",
+      "query": "我想在线解除农业银行快捷支付授权，解除后支付机构还能继续按这份协议扣款吗？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "我想在线解除农业银行快捷支付授权，解除后支付机构还能继续按这份协议扣款吗？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"我想在线解除农业银行快捷支付授权，解除后支付机构还能继续按这份协议扣款吗？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"我想在线解除农业银行快捷支付授权，解除后支付机构还能继续按这份协议扣款吗？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.07923479999954,
+      "error": null
+    },
+    {
+      "id": "bank_eval_014",
+      "query": "贷款还没到期，我想一次性把剩余欠款结清，需要经过银行同意吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "贷款还没到期，想一次性结清剩余欠款，需要经过银行同意吗？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"贷款还没到期，想一次性结清剩余欠款，需要经过银行同意吗？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"贷款还没到期，想一次性结清剩余欠款，需要经过银行同意吗？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.502275100003317,
+      "error": null
+    },
+    {
+      "id": "bank_eval_015",
+      "query": "为了出国需要开资产证明，证明有效期间里面的钱还能动用吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "为了出国需要开资产证明，证明的有效期内钱能动用吗？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"为了出国需要开资产证明，证明的有效期内钱能动用吗？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"为了出国需要开资产证明，证明的有效期内钱能动用吗？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.186230800001795,
+      "error": null
+    },
+    {
+      "id": "bank_eval_016",
+      "query": "普通信用卡和金卡怎样才能免当年年费？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "普通信用卡和金卡如何才能免当年年费？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"普通信用卡和金卡如何才能免当年年费？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"普通信用卡和金卡如何才能免当年年费？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.567376099999819,
+      "error": null
+    },
+    {
+      "id": "bank_eval_017",
+      "query": "信用卡在境外通过银联网络取现怎么收费？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡在境外通过银联网络取现怎么收费？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡在境外通过银联网络取现怎么收费？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡在境外通过银联网络取现怎么收费？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.574293300000136,
+      "error": null
+    },
+    {
+      "id": "bank_eval_018",
+      "query": "信用卡卡片挂失服务费是多少？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡卡片挂失服务费是多少？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡卡片挂失服务费是多少？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡卡片挂失服务费是多少？\"\n        }\n    ]\n}",
+      "latency_seconds": 4.95948689999932,
+      "error": null
+    },
+    {
+      "id": "bank_eval_019",
+      "query": "办理农业银行网上银行和电话银行业务时，怎样避免进入假网站或拨打假电话？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "办理农业银行网上银行时如何避免进入假网站？"
+          },
+          {
+            "id": "sq_2",
+            "query": "办理农业银行网上银行时如何避免拨打假电话？"
+          },
+          {
+            "id": "sq_3",
+            "query": "办理农业银行电话银行业务时如何避免进入假网站？"
+          },
+          {
+            "id": "sq_4",
+            "query": "办理农业银行电话银行业务时如何避免拨打假电话？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"办理农业银行网上银行时如何避免进入假网站？\"\n        },\n        {\n            \"query\": \"办理农业银行网上银行时如何避免拨打假电话？\"\n        },\n        {\n            \"query\": \"办理农业银行电话银行业务时如何避免进入假网站？\"\n        },\n        {\n            \"query\": \"办理农业银行电话银行业务时如何避免拨打假电话？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 4,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"办理农业银行网上银行时如何避免进入假网站？\"\n        },\n        {\n            \"query\": \"办理农业银行网上银行时如何避免拨打假电话？\"\n        },\n        {\n            \"query\": \"办理农业银行电话银行业务时如何避免进入假网站？\"\n        },\n        {\n            \"query\": \"办理农业银行电话银行业务时如何避免拨打假电话？\"\n        }\n    ]\n}",
+      "latency_seconds": 15.887052800000674,
+      "error": null
+    },
+    {
+      "id": "bank_eval_020",
+      "query": "电子银行发生个人信息泄露后，银行会采取什么措施？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "电子银行发生个人信息泄露后，银行会采取什么措施？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行发生个人信息泄露后，银行会采取什么措施？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行发生个人信息泄露后，银行会采取什么措施？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.713382800000545,
+      "error": null
+    },
+    {
+      "id": "bank_eval_021",
+      "query": "信用卡挂失以后，新卡具体需要几天才能寄到？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡挂失后，新卡的具体寄送时间是多久？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡挂失后，新卡的具体寄送时间是多久？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡挂失后，新卡的具体寄送时间是多久？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.872059299999819,
+      "error": null
+    },
+    {
+      "id": "bank_eval_022",
+      "query": "网上银行密码连续输错几次会被锁定？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "网上银行密码连续输错几次会被锁定？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"网上银行密码连续输错几次会被锁定？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"网上银行密码连续输错几次会被锁定？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.281602800001565,
+      "error": null
+    },
+    {
+      "id": "bank_eval_023",
+      "query": "手机号跨行转账提交后具体几分钟到账？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "手机号跨行转账提交后具体几分钟到账？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"手机号跨行转账提交后具体几分钟到账？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"手机号跨行转账提交后具体几分钟到账？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.257561700000224,
+      "error": null
+    },
+    {
+      "id": "bank_eval_024",
+      "query": "自动转账因风险控制被暂停后，多久一定会恢复？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "自动转账因风险控制被暂停后，多久一定会恢复？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账因风险控制被暂停后，多久一定会恢复？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账因风险控制被暂停后，多久一定会恢复？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.721238699999958,
+      "error": null
+    },
+    {
+      "id": "bank_eval_025",
+      "query": "个人贷款逾期一天是否一定会上征信？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人贷款逾期一天是否会记录到信用报告上？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款逾期一天是否会记录到信用报告上？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款逾期一天是否会记录到信用报告上？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.4147526000015205,
+      "error": null
+    },
+    {
+      "id": "bank_eval_026",
+      "query": "Ⅱ、Ⅲ类个人银行账户向非绑定账户转账和消费缴费的限额是多少？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "Ⅱ类个人银行账户向非绑定账户转账的限额是多少？"
+          },
+          {
+            "id": "sq_2",
+            "query": "Ⅲ类个人银行账户向非绑定账户转账的限额是多少？"
+          },
+          {
+            "id": "sq_3",
+            "query": "Ⅱ类个人银行账户向非绑定账户消费缴费的限额是多少？"
+          },
+          {
+            "id": "sq_4",
+            "query": "Ⅲ类个人银行账户向非绑定账户消费缴费的限额是多少？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"Ⅱ类个人银行账户向非绑定账户转账的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅲ类个人银行账户向非绑定账户转账的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅱ类个人银行账户向非绑定账户消费缴费的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅲ类个人银行账户向非绑定账户消费缴费的限额是多少？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 4,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"Ⅱ类个人银行账户向非绑定账户转账的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅲ类个人银行账户向非绑定账户转账的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅱ类个人银行账户向非绑定账户消费缴费的限额是多少？\"\n        },\n        {\n            \"query\": \"Ⅲ类个人银行账户向非绑定账户消费缴费的限额是多少？\"\n        }\n    ]\n}",
+      "latency_seconds": 17.762746100001095,
+      "error": null
+    },
+    {
+      "id": "bank_eval_027",
+      "query": "开户时没领实体借记卡，会影响哪些使用场景？以后还能补领吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "开户时没领实体借记卡，会影响哪些使用场景？"
+          },
+          {
+            "id": "sq_2",
+            "query": "开户时没领实体借记卡，以后还能补领吗？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"开户时没领实体借记卡，会影响哪些使用场景？\"\n        },\n        {\n            \"query\": \"开户时没领实体借记卡，以后还能补领吗？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"开户时没领实体借记卡，会影响哪些使用场景？\"\n        },\n        {\n            \"query\": \"开户时没领实体借记卡，以后还能补领吗？\"\n        }\n    ]\n}",
+      "latency_seconds": 9.687212199998612,
+      "error": null
+    },
+    {
+      "id": "bank_eval_028",
+      "query": "电子银行指令确认后还能撤回吗？如果银行无法核实可疑交易又会怎样？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "电子银行指令确认后能否撤回？"
+          },
+          {
+            "id": "sq_2",
+            "query": "如果银行无法核实可疑交易，会发生什么情况？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行指令确认后能否撤回？\"\n        },\n        {\n            \"query\": \"如果银行无法核实可疑交易，会发生什么情况？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行指令确认后能否撤回？\"\n        },\n        {\n            \"query\": \"如果银行无法核实可疑交易，会发生什么情况？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.306378500001301,
+      "error": null
+    },
+    {
+      "id": "bank_eval_029",
+      "query": "新开的银行账户半年一直没用，非柜面业务会怎样恢复？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "新开的银行账户半年一直没用，非柜面业务会怎样恢复？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"新开的银行账户半年一直没用，非柜面业务会怎样恢复？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"新开的银行账户半年一直没用，非柜面业务会怎样恢复？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.355289099999936,
+      "error": null
+    },
+    {
+      "id": "bank_eval_030",
+      "query": "电话办理的银行卡临时挂失如果有效期是5天，什么时候自动失效？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "电话办理的银行卡临时挂失有效期是5天，什么时候自动失效？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电话办理的银行卡临时挂失有效期是5天，什么时候自动失效？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电话办理的银行卡临时挂失有效期是5天，什么时候自动失效？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.197376399999484,
+      "error": null
+    },
+    {
+      "id": "bank_eval_031",
+      "query": "正式挂失后怎么领取新卡？银行核验开户信息时最多可能延后多久？",
+      "evidence_mode": "single",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "正式挂失后如何领取新卡？"
+          },
+          {
+            "id": "sq_2",
+            "query": "银行核验开户信息时，最长可能延后多久？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"正式挂失后如何领取新卡？\"\n        },\n        {\n            \"query\": \"银行核验开户信息时，最长可能延后多久？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"正式挂失后如何领取新卡？\"\n        },\n        {\n            \"query\": \"银行核验开户信息时，最长可能延后多久？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.643995300000824,
+      "error": null
+    },
+    {
+      "id": "bank_eval_032",
+      "query": "华夏借记卡能不能透支？芯片卡最长有效期多久？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "华夏借记卡能不能透支？"
+          },
+          {
+            "id": "sq_2",
+            "query": "芯片卡最长有效期多久？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"华夏借记卡能不能透支？\"\n        },\n        {\n            \"query\": \"芯片卡最长有效期多久？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"华夏借记卡能不能透支？\"\n        },\n        {\n            \"query\": \"芯片卡最长有效期多久？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.397419799999625,
+      "error": null
+    },
+    {
+      "id": "bank_eval_033",
+      "query": "银行发现我的借记卡可能被冒用时可以怎么处理？我应该做什么？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "银行发现我的借记卡可能被冒用时可以怎么处理？"
+          },
+          {
+            "id": "sq_2",
+            "query": "我应该做什么？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行发现我的借记卡可能被冒用时可以怎么处理？\"\n        },\n        {\n            \"query\": \"我应该做什么？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行发现我的借记卡可能被冒用时可以怎么处理？\"\n        },\n        {\n            \"query\": \"我应该做什么？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.149964100000943,
+      "error": null
+    },
+    {
+      "id": "bank_eval_034",
+      "query": "不想使用信用卡小额免密免签功能，可以通过什么渠道关闭？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "不想使用信用卡小额免密免签功能，可以通过什么渠道关闭？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"不想使用信用卡小额免密免签功能，可以通过什么渠道关闭？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"不想使用信用卡小额免密免签功能，可以通过什么渠道关闭？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.037859299998672,
+      "error": null
+    },
+    {
+      "id": "bank_eval_035",
+      "query": "信用卡审核通过当天能不能先绑定微信或支付宝使用？实体卡没激活有什么限制？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡审核通过当天能否先绑定微信或支付宝使用？"
+          },
+          {
+            "id": "sq_2",
+            "query": "实体卡未激活时，有哪些限制？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡审核通过当天能否先绑定微信或支付宝使用？\"\n        },\n        {\n            \"query\": \"实体卡未激活时，有哪些限制？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡审核通过当天能否先绑定微信或支付宝使用？\"\n        },\n        {\n            \"query\": \"实体卡未激活时，有哪些限制？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.427695999998832,
+      "error": null
+    },
+    {
+      "id": "bank_eval_036",
+      "query": "信用卡账单一直没收到，而且我对一笔交易有异议，可以先不还这笔钱吗？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡账单一直没收到，如何处理？"
+          },
+          {
+            "id": "sq_2",
+            "query": "对一笔交易有异议，能否先不还这笔钱？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡账单一直没收到，如何处理？\"\n        },\n        {\n            \"query\": \"对一笔交易有异议，能否先不还这笔钱？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡账单一直没收到，如何处理？\"\n        },\n        {\n            \"query\": \"对一笔交易有异议，能否先不还这笔钱？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.750959799999691,
+      "error": null
+    },
+    {
+      "id": "bank_eval_037",
+      "query": "普通卡、金卡、标准白金卡和钛白金卡分别刷几笔可以免当年年费？",
+      "evidence_mode": "single",
+      "task_type": "information_integration",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "普通卡、金卡、标准白金卡和钛白金卡分别刷多少笔可以免当年年费？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"普通卡、金卡、标准白金卡和钛白金卡分别刷多少笔可以免当年年费？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"普通卡、金卡、标准白金卡和钛白金卡分别刷多少笔可以免当年年费？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.55561569999918,
+      "error": null
+    },
+    {
+      "id": "bank_eval_038",
+      "query": "信用卡取现金有没有免息期？透支利息通常按什么日利率计算？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "信用卡取现金是否有免息期？"
+          },
+          {
+            "id": "sq_2",
+            "query": "透支利息通常按什么日利率计算？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡取现金是否有免息期？\"\n        },\n        {\n            \"query\": \"透支利息通常按什么日利率计算？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"信用卡取现金是否有免息期？\"\n        },\n        {\n            \"query\": \"透支利息通常按什么日利率计算？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.973601800000324,
+      "error": null
+    },
+    {
+      "id": "bank_eval_039",
+      "query": "未成年人可以自己申请农业银行网络金融业务吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "未成年人可以自己申请农业银行网络金融业务吗？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"未成年人可以自己申请农业银行网络金融业务吗？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"未成年人可以自己申请农业银行网络金融业务吗？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.4256432999973185,
+      "error": null
+    },
+    {
+      "id": "bank_eval_040",
+      "query": "电子银行认证工具可能泄露了应该怎么办？已经通过安全程序的支付指令还能撤销吗？",
+      "evidence_mode": "single",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "电子银行认证工具可能泄露了，应该如何处理？"
+          },
+          {
+            "id": "sq_2",
+            "query": "已经通过安全程序的支付指令能否被撤销？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行认证工具可能泄露了，应该如何处理？\"\n        },\n        {\n            \"query\": \"已经通过安全程序的支付指令能否被撤销？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"电子银行认证工具可能泄露了，应该如何处理？\"\n        },\n        {\n            \"query\": \"已经通过安全程序的支付指令能否被撤销？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.6140931000009,
+      "error": null
+    },
+    {
+      "id": "bank_eval_041",
+      "query": "因为没交网络金融服务费导致协议中止，补交后会恢复吗？拖欠很久又会怎样？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "因为没交网络金融服务费导致协议中止，补交后是否会恢复？"
+          },
+          {
+            "id": "sq_2",
+            "query": "拖欠很久不交网络金融服务费，会有什么后果？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"因为没交网络金融服务费导致协议中止，补交后是否会恢复？\"\n        },\n        {\n            \"query\": \"拖欠很久不交网络金融服务费，会有什么后果？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"因为没交网络金融服务费导致协议中止，补交后是否会恢复？\"\n        },\n        {\n            \"query\": \"拖欠很久不交网络金融服务费，会有什么后果？\"\n        }\n    ]\n}",
+      "latency_seconds": 9.672404000000824,
+      "error": null
+    },
+    {
+      "id": "bank_eval_042",
+      "query": "别人只知道我的手机号，能直接通过跨行收款从我的绑定账户扣钱吗？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "别人知道我的手机号，能否通过跨行收款从我的绑定账户扣款？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"别人知道我的手机号，能否通过跨行收款从我的绑定账户扣款？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"别人知道我的手机号，能否通过跨行收款从我的绑定账户扣款？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.336214999999356,
+      "error": null
+    },
+    {
+      "id": "bank_eval_043",
+      "query": "开通手机号转账时发现这个号码已经被别人在其他银行注册了，会怎么处理？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "开通手机号转账时发现这个号码已经被别人在其他银行注册了，会怎么处理？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"开通手机号转账时发现这个号码已经被别人在其他银行注册了，会怎么处理？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"开通手机号转账时发现这个号码已经被别人在其他银行注册了，会怎么处理？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.673955199999909,
+      "error": null
+    },
+    {
+      "id": "bank_eval_044",
+      "query": "手机号跨行转账有问题时查询需要提供什么？交易限额由哪家银行决定？",
+      "evidence_mode": "single",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "手机号跨行转账出现问题时，需要提供哪些信息？"
+          },
+          {
+            "id": "sq_2",
+            "query": "交易限额是由哪家银行来决定的？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"手机号跨行转账出现问题时，需要提供哪些信息？\"\n        },\n        {\n            \"query\": \"交易限额是由哪家银行来决定的？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"手机号跨行转账出现问题时，需要提供哪些信息？\"\n        },\n        {\n            \"query\": \"交易限额是由哪家银行来决定的？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.486034699999436,
+      "error": null
+    },
+    {
+      "id": "bank_eval_045",
+      "query": "个人自动转账支持哪四种转账方式？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人自动转账支持哪四种转账方式？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人自动转账支持哪四种转账方式？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人自动转账支持哪四种转账方式？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.122980500000267,
+      "error": null
+    },
+    {
+      "id": "bank_eval_046",
+      "query": "同一个转出账户在同一天安排了多笔自动转账，银行按什么顺序处理？第一笔失败后还会试下一笔吗？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "同一个转出账户在同一天安排了多笔自动转账，银行按什么顺序处理？"
+          },
+          {
+            "id": "sq_2",
+            "query": "第一笔自动转账失败后，是否会尝试执行后续的转账？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"同一个转出账户在同一天安排了多笔自动转账，银行按什么顺序处理？\"\n        },\n        {\n            \"query\": \"第一笔自动转账失败后，是否会尝试执行后续的转账？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"同一个转出账户在同一天安排了多笔自动转账，银行按什么顺序处理？\"\n        },\n        {\n            \"query\": \"第一笔自动转账失败后，是否会尝试执行后续的转账？\"\n        }\n    ]\n}",
+      "latency_seconds": 10.487808899997617,
+      "error": null
+    },
+    {
+      "id": "bank_eval_047",
+      "query": "自动转账业务的应税款项交完后，最迟多久可以要求银行开发票？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "自动转账业务的应税款项交完后，最迟多久可以要求银行开发票？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账业务的应税款项交完后，最迟多久可以要求银行开发票？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"自动转账业务的应税款项交完后，最迟多久可以要求银行开发票？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.792552300001262,
+      "error": null
+    },
+    {
+      "id": "bank_eval_048",
+      "query": "快捷支付可以使用哪些方式验证交易身份？",
+      "evidence_mode": "single",
+      "task_type": "factual_lookup",
+      "query_style": "keyword",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "快捷支付可以使用哪些方式验证交易身份？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付可以使用哪些方式验证交易身份？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付可以使用哪些方式验证交易身份？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.287653899998986,
+      "error": null
+    },
+    {
+      "id": "bank_eval_049",
+      "query": "快捷支付扣款失败时，哪些情况银行可以不承担责任？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "快捷支付扣款失败时，哪些情况银行可以不承担责任？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付扣款失败时，哪些情况银行可以不承担责任？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付扣款失败时，哪些情况银行可以不承担责任？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.870393000001059,
+      "error": null
+    },
+    {
+      "id": "bank_eval_050",
+      "query": "发现快捷支付不是本人操作时该找谁处理？如果是验证方式不安全造成损失，谁负责？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "发现快捷支付不是本人操作时应如何处理？"
+          },
+          {
+            "id": "sq_2",
+            "query": "如果验证方式不安全造成损失，责任方是谁？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"发现快捷支付不是本人操作时应如何处理？\"\n        },\n        {\n            \"query\": \"如果验证方式不安全造成损失，责任方是谁？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"发现快捷支付不是本人操作时应如何处理？\"\n        },\n        {\n            \"query\": \"如果验证方式不安全造成损失，责任方是谁？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.730411599997751,
+      "error": null
+    },
+    {
+      "id": "bank_eval_051",
+      "query": "个人贷款还款日当天最晚几点前要把钱存进还款账户？还款账户能直接换吗？",
+      "evidence_mode": "single",
+      "task_type": "procedural_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人贷款还款日当天最晚几点前要把钱存进还款账户？"
+          },
+          {
+            "id": "sq_2",
+            "query": "还款账户能否直接更换？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款还款日当天最晚几点前要把钱存进还款账户？\"\n        },\n        {\n            \"query\": \"还款账户能否直接更换？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款还款日当天最晚几点前要把钱存进还款账户？\"\n        },\n        {\n            \"query\": \"还款账户能否直接更换？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.59825120000096,
+      "error": null
+    },
+    {
+      "id": "bank_eval_052",
+      "query": "个人贷款采用受托支付和自主支付时，借款人分别要准备或保留什么资料？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人贷款采用受托支付时，借款人要准备或保留什么资料？"
+          },
+          {
+            "id": "sq_2",
+            "query": "个人贷款采用自主支付时，借款人要准备或保留什么资料？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款采用受托支付时，借款人要准备或保留什么资料？\"\n        },\n        {\n            \"query\": \"个人贷款采用自主支付时，借款人要准备或保留什么资料？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款采用受托支付时，借款人要准备或保留什么资料？\"\n        },\n        {\n            \"query\": \"个人贷款采用自主支付时，借款人要准备或保留什么资料？\"\n        }\n    ]\n}",
+      "latency_seconds": 9.987214199998562,
+      "error": null
+    },
+    {
+      "id": "bank_eval_053",
+      "query": "个人贷款逾期和把贷款用于合同外用途，罚息上浮比例一样吗？",
+      "evidence_mode": "single",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人贷款逾期后，罚息上浮比例是否相同？"
+          },
+          {
+            "id": "sq_2",
+            "query": "个人贷款用于合同外用途时，罚息上浮比例是否一致？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款逾期后，罚息上浮比例是否相同？\"\n        },\n        {\n            \"query\": \"个人贷款用于合同外用途时，罚息上浮比例是否一致？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款逾期后，罚息上浮比例是否相同？\"\n        },\n        {\n            \"query\": \"个人贷款用于合同外用途时，罚息上浮比例是否一致？\"\n        }\n    ]\n}",
+      "latency_seconds": 9.658142700001918,
+      "error": null
+    },
+    {
+      "id": "bank_eval_054",
+      "query": "个人贷款相关应税款项的发票要在多久内申请？发票开错由谁承担？",
+      "evidence_mode": "single",
+      "task_type": "conditional_rule",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "个人贷款相关应税款项的发票应在多久内申请？"
+          },
+          {
+            "id": "sq_2",
+            "query": "发票开错由谁承担？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款相关应税款项的发票应在多久内申请？\"\n        },\n        {\n            \"query\": \"发票开错由谁承担？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"个人贷款相关应税款项的发票应在多久内申请？\"\n        },\n        {\n            \"query\": \"发票开错由谁承担？\"\n        }\n    ]\n}",
+      "latency_seconds": 8.308347799997136,
+      "error": null
+    },
+    {
+      "id": "bank_eval_055",
+      "query": "非冻结资金存款证明和冻结资金存款证明有什么区别？冻结到期后什么时候解冻？",
+      "evidence_mode": "all_required",
+      "task_type": "information_integration",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "complex",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "非冻结资金存款证明和冻结资金存款证明的区别是什么？"
+          },
+          {
+            "id": "sq_2",
+            "query": "冻结资金存款证明在冻结到期后何时解冻？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"非冻结资金存款证明和冻结资金存款证明的区别是什么？\"\n        },\n        {\n            \"query\": \"冻结资金存款证明在冻结到期后何时解冻？\"\n        }\n    ]\n}"
+      },
+      "query_type": "complex",
+      "subquery_count": 2,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"非冻结资金存款证明和冻结资金存款证明的区别是什么？\"\n        },\n        {\n            \"query\": \"冻结资金存款证明在冻结到期后何时解冻？\"\n        }\n    ]\n}",
+      "latency_seconds": 9.055320300001767,
+      "error": null
+    },
+    {
+      "id": "bank_eval_056",
+      "query": "Ⅱ、Ⅲ类账户当天超过2000元限额后，具体到第二天几点恢复？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "Ⅱ、Ⅲ类账户当天超过2000元限额后，具体到第二天几点恢复？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"Ⅱ、Ⅲ类账户当天超过2000元限额后，具体到第二天几点恢复？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"Ⅱ、Ⅲ类账户当天超过2000元限额后，具体到第二天几点恢复？\"\n        }\n    ]\n}",
+      "latency_seconds": 7.243296299999201,
+      "error": null
+    },
+    {
+      "id": "bank_eval_057",
+      "query": "银行卡挂失遇到特殊核验情况时，延期办理最长可以超过一个月多少天？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "银行卡挂失遇到特殊核验情况时，延期办理最长可以超过一个月多少天？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡挂失遇到特殊核验情况时，延期办理最长可以超过一个月多少天？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"银行卡挂失遇到特殊核验情况时，延期办理最长可以超过一个月多少天？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.636168499997439,
+      "error": null
+    },
+    {
+      "id": "bank_eval_058",
+      "query": "华夏借记卡IC卡到期换卡具体要收多少手续费？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "华夏借记卡IC卡到期换卡的具体费用是多少？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"华夏借记卡IC卡到期换卡的具体费用是多少？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"华夏借记卡IC卡到期换卡的具体费用是多少？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.754617200000212,
+      "error": null
+    },
+    {
+      "id": "bank_eval_059",
+      "query": "民生信用卡小额免密免签的单笔限额具体是多少元？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "民生信用卡小额免密免签的单笔限额具体是多少元？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"民生信用卡小额免密免签的单笔限额具体是多少元？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"民生信用卡小额免密免签的单笔限额具体是多少元？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.041830499998468,
+      "error": null
+    },
+    {
+      "id": "bank_eval_060",
+      "query": "快捷支付非本人交易投诉后，支付机构必须在几个工作日内处理完？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "快捷支付非本人交易投诉后，支付机构必须在几个工作日内处理完？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付非本人交易投诉后，支付机构必须在几个工作日内处理完？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"快捷支付非本人交易投诉后，支付机构必须在几个工作日内处理完？\"\n        }\n    ]\n}",
+      "latency_seconds": 6.487170000000333,
+      "error": null
+    },
+    {
+      "id": "bank_eval_061",
+      "query": "办理个人存款证明时提交的个人信息会被银行保存整整多少年？",
+      "evidence_mode": "insufficient",
+      "task_type": "unanswerable",
+      "query_style": "semantic",
+      "query_plan": {
+        "query_type": "simple",
+        "subqueries": [
+          {
+            "id": "sq_1",
+            "query": "办理个人存款证明时提交的个人信息会被银行保存多久？"
+          }
+        ],
+        "used_fallback": false,
+        "fallback_reason": null,
+        "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"办理个人存款证明时提交的个人信息会被银行保存多久？\"\n        }\n    ]\n}"
+      },
+      "query_type": "simple",
+      "subquery_count": 1,
+      "used_fallback": false,
+      "fallback_reason": null,
+      "raw_model_output": "{\n    \"subqueries\": [\n        {\n            \"query\": \"办理个人存款证明时提交的个人信息会被银行保存多久？\"\n        }\n    ]\n}",
+      "latency_seconds": 5.739627499999187,
+      "error": null
+    }
+  ]
+}
